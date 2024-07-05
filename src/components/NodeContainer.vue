@@ -1,5 +1,5 @@
 <template>
-<div class="flex py-2">
+<div class="flex py-2 transition-all duration-600 ease-in-out">
     <slot/>
 </div>
 </template>

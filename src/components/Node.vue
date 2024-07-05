@@ -1,20 +1,21 @@
 <template> 
-    <div class="space-2 justify-center"> 
+    <div class="space-2 justify-center transition-all duration-300 ">
         <div class=" border rounded h-16 w-40 mx-auto bg-slate-50" ref="element">
            <div>{{ item.id }} ({{ nodes.length }})</div>
            <div>{{ item.name }} </div>
-           <div> {{ x }},  {{ Math.ceil(y) }}</div>
             <div class="text-center">
-                <button class="border px-1" v-if="nodes.length" @click="handleChildren">{{ show ? '-' : '+' }}</button>
+                <button class="border px-1 bg-white" v-if="nodes.length" @click="handleChildren">{{ show ? '-' : '+' }}</button>
             </div>
         </div>
-        
+
         <Transition name="list">
             <NodeContainer v-if="nodes.length && show" class=" mt-5 space-x-5">
-                <Node v-for="node in nodes" :key="node.id" :id="node.id" @opened="handleOpenItem"/>
+
+               
+                <Node v-for="node in nodes" :key="node.id" :id="node.id"/>
             </NodeContainer>
         </Transition>
-    </div> 
+    </div>
 </template>
 
 <script setup>
@@ -23,25 +24,18 @@ import collection from 'lodash/collection';
 import data from '../../sample.json';
 
 import NodeContainer from './NodeContainer.vue';
-import { useElementBounding } from '@vueuse/core';
 
 const props = defineProps({
     id: String,
 })
 const element = ref(null);
-const {x, y} = useElementBounding(element);
 
-const emit = defineEmits(['opened']);
 
 const show = ref(false);
 const item = collection.find(data, { id: props.id });
 
 const handleChildren = () => {
     show.value = !show.value;
-
-    if (show.value) {
-        emit('opened',  { x, y} );
-    }
 };
 
 const getByParentId = (parentId) => {
@@ -52,9 +46,8 @@ const nodes = computed(() => {
     return getByParentId(props.id);
 });
 
-const handleOpenItem = (positions) => {
-    emit('opened', positions);
-};
+
+
 
 </script>
 
