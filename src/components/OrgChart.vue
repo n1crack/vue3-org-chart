@@ -1,8 +1,10 @@
 <template>
   <div class="vue3-org-chart">
-    <div ref="scene" class="p-5 border rounded bg-white">
+    <div ref="scene" class="p-5 border rounded bg-white text-center">
     
-        <Node :id="getRootId()"></Node>
+        <div class="flex py-2 overflow-auto">
+            <Node :id="getRootId()"></Node>
+        </div>
     </div>
   </div>
 </template>

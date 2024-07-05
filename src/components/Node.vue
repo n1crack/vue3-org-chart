@@ -1,12 +1,15 @@
 <template>
-    <div class="border rounded">
-        <div class="text-center">
-            {{ item.id }} - {{ item.name }} child: {{ nodes.length }} 
-            <button class="border px-1" v-if="nodes.length" @click="handleChildren">{{ show ? '-' : '+' }}</button>
+    <div class="space-2 justify-center">
+        <div class=" border rounded h-16 w-60 mx-auto bg-slate-50">
+            {{ item.id }} - {{ item.name }} 
+            <div>child: {{ nodes.length }} </div>
+            <div class="text-center">
+                <button class="border px-1" v-if="nodes.length" @click="handleChildren">{{ show ? '-' : '+' }}</button>
+            </div>
         </div>
         
         <Transition name="list">
-            <NodeContainer v-if="nodes.length && show">
+            <NodeContainer v-if="nodes.length && show" class=" mt-5 space-x-5">
                 <Node v-for="node in nodes" :key="node.id" :id="node.id" />
             </NodeContainer>
         </Transition>
@@ -44,12 +47,17 @@ const nodes = computed(() => {
 
 
 <style>
-.list-enter-active,
 .list-leave-active {
+  transition: all 0.1s ease;
+}
+.list-leave-to {
+  opacity: 0;
+}
+
+.list-enter-active{
   transition: all 0.5s ease;
 }
-.list-enter-from,
-.list-leave-to {
+.list-enter-from {
   scale: 0.90;
 }
 </style>
