@@ -1,0 +1,47 @@
+{
+  "name": "vue3-org-chart",
+  "version": "0.0.1",
+  "description": ".",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue3-org-chart.cjs",
+  "module": "./dist/vue3-org-chart.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "homepage": "https://github.com/n1crack/vue3-org-chart#readme",
+  "keywords": [
+    "vue",
+    "org chart",
+    "tree",
+    "hierarchy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n1crack/vue3-org-chart.git"
+  },
+  "author": {
+    "name": "Yusuf Özdemir",
+    "mail": "yusuf@ozdemir.be"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.7.1",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "rollup-plugin-copy": "^3.5.0",
+    "sass": "^1.75.0",
+    "tailwindcss": "^3.1.8",
+    "vite": "^5.0.12",
+    "vite-svg-loader": "^5.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "vue": "^3.2.0"
+  }
+}
