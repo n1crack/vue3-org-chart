@@ -16,6 +16,7 @@ export default defineConfig({
             hook: "writeBundle",
         })
     ],
+ 
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.js'),
