@@ -1,5 +1,5 @@
 <template>
-<div class="flex transition-all duration-600 ease-in-out">
+<div class="flex">
     <slot/>
 </div>
 </template>
