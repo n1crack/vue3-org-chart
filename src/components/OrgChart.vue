@@ -2,7 +2,11 @@
   <div class="vue3-org-chart">
     <div ref="container" class="min-h-[70vh] border rounded bg-white text-center overflow-hidden">
         <div ref="scene" class="flex w-full justify-center">
-            <Node :id="getRootId()" key="root"></Node>
+            <Node :id="getRootId()" key="root">
+              <template #node="{item, nodes, show, handleChildren}">
+                <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
+              </template>
+            </Node>
         </div> 
     </div>
   </div>
