@@ -1,11 +1,9 @@
 <template>
-  <div class="relative block space-2"
+  <div class="relative flex flex-col items-center space-2"
   >
     <slot name="top-border"/>
-    <div class="w-min inline-block mt-2 mx-2"
-         :class="{
-          'before:absolute before:border-r before:h-2 before:-mt-2': item.parentId
-        }" ref="element">
+    <div class="w-min inline-block mt-2 mx-2" ref="element">
+      <div v-if="item.parentId" class="absolute border-r h-2 -mt-2 left-1/2"></div>
       <div>
         <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
       </div>

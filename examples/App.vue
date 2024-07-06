@@ -3,16 +3,21 @@
     <vue-org-chart>
 
       <template #node="{item, nodes, show, handleChildren}">
-         <div class="w-48 p-2 border bg-slate-50 rounded hover:bg-slate-200"
-             :class="{ 'border-indigo-300 bg-indigo-100': show }">
-          <div>{{ item.id }} ({{ nodes.length }})</div>
-          <div>{{ item.name }} </div>
-          <div>{{ item.name }} </div>
-          <div>{{ item.name }} </div>
-          <div>{{ item.name }} </div>
+        <div class="flex space-x-2 w-48 h-28 p-2 border rounded hover:bg-slate-200"
+             :class="{'border-indigo-300 bg-indigo-100': show, 'bg-slate-50' : !show }">
+          <figure>
+            <img class="w-12 h-12 rounded-full" :src="item.imageUrl" alt="avatar">
+          </figure>
+          <div>
+            <div>{{ item.id }} ({{ nodes.length }})</div>
+            <div>{{ item.name }}</div>
+            <div> {{ show }}</div>
+          </div>
         </div>
-       <div class="text-center">
-          <button class="border w-4 h-4 bg-white text-xs" v-if="nodes.length" @click="handleChildren">{{ show ? '-' : '+' }}</button>
+        <div class="text-center">
+          <button class="border w-4 h-4 bg-white text-xs" v-if="nodes.length" @click="handleChildren">
+            {{ show ? '-' : '+' }}
+          </button>
         </div>
       </template>
 
