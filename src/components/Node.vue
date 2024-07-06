@@ -1,10 +1,9 @@
 <template>
-  <div class="relative flex flex-col items-center space-2"
-  >
+  <div class="relative flex flex-col items-center space-2">
     <slot name="top-border"/>
     <div class="w-min inline-block mt-2 mx-2" ref="element">
       <div v-if="item.parentId" class="absolute border-r h-2 -mt-2 left-1/2"></div>
-      <div>
+      <div tabindex="0" @keydown.self.space.prevent="goToNode">
         <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
       </div>
       <div v-if="nodes.length && show" class="mx-auto border-l left-1/2 w-[1px] h-2"></div>
@@ -34,6 +33,7 @@ import collection from 'lodash/collection';
 import data from '../../sample.json';
 
 import NodeContainer from './NodeContainer.vue';
+import panzoom from "panzoom";
 
 const props = defineProps({
   id: String,
@@ -53,8 +53,13 @@ const container = inject('container');
 //   }
 // )
 
-const handleChildren = (e) => {
+const handleChildren = () => {
+  if (!nodes.length) return;
   show.value = !show.value;
+};
+
+const goToNode = (id) => {
+
   // get canvas rectangle with absolute position of element
   const rect = container.value.getBoundingClientRect();
   const sceneRect = scene.value.getBoundingClientRect();
@@ -64,6 +69,7 @@ const handleChildren = (e) => {
   const dy = rect.y + rect.height/2 - elementRect.y - elementRect.height/2;
 
   panzoomInstance.value.moveBy( dx, dy, true)
+  handleChildren();
 };
 
 function getCanvasCoords(x,y){
