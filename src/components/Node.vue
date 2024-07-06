@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import {ref, reactive} from 'vue';
+import {ref, reactive, inject, onMounted} from 'vue';
 import collection from 'lodash/collection';
 import data from '../../sample.json';
 
@@ -43,9 +43,32 @@ const element = ref(null);
 const show = ref(false);
 const item = collection.find(data, {id: props.id});
 
-const handleChildren = () => {
+const panzoomInstance = inject('panzoomInstance');
+const scene = inject('scene');
+const container = inject('container');
+
+// onMounted(
+//   () => {
+//     scene.value.addEventListener('click', handleChildren);
+//   }
+// )
+
+const handleChildren = (e) => {
   show.value = !show.value;
+  // get canvas rectangle with absolute position of element
+  const rect = container.value.getBoundingClientRect();
+  const sceneRect = scene.value.getBoundingClientRect();
+  const elementRect = element.value.getBoundingClientRect();
+
+  const dx = rect.x + rect.width/2 - elementRect.x - elementRect.width/2;
+  const dy = rect.y + rect.height/2 - elementRect.y - elementRect.height/2;
+
+  panzoomInstance.value.moveBy( dx, dy, true)
 };
+
+function getCanvasCoords(x,y){
+    return panzoomInstance.value.getTransform();
+}
 
 const getByParentId = (parentId) => {
   return collection.filter(data, {parentId});

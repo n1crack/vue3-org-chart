@@ -1,6 +1,6 @@
 <template>
   <div class="vue3-org-chart">
-    <div ref="container" class="min-h-[70vh] border rounded bg-white  overflow-hidden">
+    <div ref="container" class="min-h-[70vh] border rounded bg-white overflow-hidden">
         <div ref="scene" class="flex w-full justify-center">
             <Node :id="getRootId()" key="root">
               <template #node="{item, nodes, show, handleChildren}">
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import {  onMounted, ref } from 'vue';
+import {onMounted, provide, ref} from 'vue';
 import Node from './Node.vue';
 import data from '../../sample.json';
 import collection from 'lodash/collection';
@@ -29,9 +29,13 @@ const getRoot = () => {
 const getRootId = () => {
   return getRoot().id;
 };
+const panzoomInstance = ref(null);
+provide('panzoomInstance', panzoomInstance);
+provide('scene', scene);
+provide('container', container);
 
 onMounted(() => {
- let instance = panzoom(scene.value, {
+ const abc = panzoomInstance.value = panzoom(scene.value, {
    maxZoom: 5,
     minZoom: 0.1,
     initialX: 0,
@@ -39,8 +43,8 @@ onMounted(() => {
       bounds: false,
   });
 
- instance.moveTo(0, 250);
 
+ panzoomInstance.value.moveTo(0, 250);
 })
  
 </script>

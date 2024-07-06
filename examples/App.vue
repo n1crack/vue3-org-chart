@@ -3,7 +3,7 @@
     <vue-org-chart>
 
       <template #node="{item, nodes, show, handleChildren}">
-        <div class="flex space-x-2 w-48 h-28 p-2 border rounded hover:bg-slate-200"
+        <div class="flex space-x-2 w-64 p-2 border rounded hover:bg-slate-200"
              :class="{'border-indigo-300 bg-indigo-100': show, 'bg-slate-50' : !show }">
           <figure>
             <img class="w-12 h-12 rounded-full" :src="item.imageUrl" alt="avatar">
