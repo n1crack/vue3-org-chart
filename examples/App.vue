@@ -3,9 +3,12 @@
     <vue-org-chart>
 
       <template #node="{item, nodes, show, handleChildren}">
-         <div class="h-20 w-40  p-2 border bg-slate-50 rounded hover:bg-slate-200"
+         <div class="w-48 p-2 border bg-slate-50 rounded hover:bg-slate-200"
              :class="{ 'border-indigo-300 bg-indigo-100': show }">
           <div>{{ item.id }} ({{ nodes.length }})</div>
+          <div>{{ item.name }} </div>
+          <div>{{ item.name }} </div>
+          <div>{{ item.name }} </div>
           <div>{{ item.name }} </div>
         </div>
        <div class="text-center">

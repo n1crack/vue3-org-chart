@@ -6,6 +6,8 @@ const postcss = require("postcss");
 module.exports = {
   content: [
     "./src/**/*.{vue,js,ts,jsx,tsx,svg}",
+    "./examples/**/*.{vue,js,ts,jsx,tsx,svg}",
+
   ],
   important: '.vue3-org-chart',
   darkMode: 'class',
