@@ -9,7 +9,7 @@
       <div v-if="nodes.length && show" class="mx-auto border-l left-1/2 w-[1px] h-2"></div>
     </div>
 
-    <Transition name="list">
+    <Transition name="nodeTransition">
       <NodeContainer v-if="nodes.length && show">
         <Node v-for="(node, index) in nodes" :key="node.id" :id="node.id" ref="nodeRefs">
           <template #top-border>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import {ref, reactive, inject, onMounted} from 'vue';
+import {ref, reactive, inject} from 'vue';
 import collection from 'lodash/collection';
 import data from '../../sample.json';
 
@@ -56,20 +56,26 @@ const container = inject('container');
 const handleChildren = () => {
   if (!nodes.length) return;
   show.value = !show.value;
+  goToNode();
 };
 
-const goToNode = (id) => {
-
+const goToNode = () => {
   // get canvas rectangle with absolute position of element
   const rect = container.value.getBoundingClientRect();
   const sceneRect = scene.value.getBoundingClientRect();
   const elementRect = element.value.getBoundingClientRect();
 
-  const dx = rect.x + rect.width/2 - elementRect.x - elementRect.width/2;
-  const dy = rect.y + rect.height/2 - elementRect.y - elementRect.height/2;
+  const containerCenterX = rect.x + rect.width/2;
+  const containerCenterY = rect.y + rect.height/2;
+
+
+  const elementCenterX = elementRect.x + elementRect.width/2;
+  const elementCenterY = elementRect.y + elementRect.height/2;
+  const dx = containerCenterX - elementCenterX;
+  const dy = containerCenterY - elementCenterY;
 
   panzoomInstance.value.moveBy( dx, dy, true)
-  handleChildren();
+
 };
 
 function getCanvasCoords(x,y){
@@ -82,23 +88,23 @@ const getByParentId = (parentId) => {
 
 const nodes = reactive(getByParentId(props.id));
 
-
 </script>
 
 <style>
-.list-leave-active {
-  transition: all 0.1s ease;
+.nodeTransition-leave-active {
+  transition: all 0.2s ease;
 }
 
-.list-leave-to {
+.nodeTransition-leave-to {
   opacity: 0;
+  scale: 0.20;
 }
 
-.list-enter-active {
+.nodeTransition-enter-active {
   transition: all 0.3s ease;
 }
 
-.list-enter-from {
-  scale: 0.90;
+.nodeTransition-enter-from {
+  scale: 0.70;
 }
 </style>
