@@ -28,7 +28,7 @@ const getRootId = () => {
 
 onMounted(() => {
  let instance = panzoom(scene.value, {
-   maxZoom: 2,
+   maxZoom: 5,
     minZoom: 0.1,
     initialX: 0,
       initialZoom: 1,
