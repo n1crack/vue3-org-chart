@@ -11,15 +11,15 @@
         <Transition name="list">
             <NodeContainer v-if="nodes.length && show" class=" mt-5 space-x-5">
 
-               
-                <Node v-for="node in nodes" :key="node.id" :id="node.id"/>
+                <Node v-for="(node,index) in nodes" :key="node.id" :id="node.id" />
+  
             </NodeContainer>
         </Transition>
     </div>
 </template>
 
 <script setup>
-import { computed, onMounted,defineEmits ,  ref } from 'vue';
+import {computed, onMounted, defineEmits, ref, reactive} from 'vue';
 import collection from 'lodash/collection';
 import data from '../../sample.json';
 
@@ -42,9 +42,7 @@ const getByParentId = (parentId) => {
   return collection.filter(data, { parentId });
 };
 
-const nodes = computed(() => {
-    return getByParentId(props.id);
-});
+const nodes = reactive(getByParentId(props.id));
 
 
 
