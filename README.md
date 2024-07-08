@@ -2,13 +2,13 @@
 # vue3-org-chart
 
 ### About
-Vue3 Org Chart is a simple and lightweight organization chart component for Vue3.
+
+Vue3 Org Chart is a simple and lightweight organization chart component for Vue3. It is highly customizable.
 
 <img width="500" alt="image" src="https://github.com/n1crack/vue3-org-chart/assets/712404/b168b58c-dc63-4968-93f8-f3e76cc5ccae">
 
 ### Demo
-will be added soon.. 
-
+[https://playcode.io/1931623](https://playcode.io/1931623)
 
 ### Installation
 
@@ -17,7 +17,33 @@ npm i vue3-org-chart
 ```
 
 ### Usage
-will be added soon.. 
+JS entry point
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import Vue3OrgChart from 'vue3-org-chart'
+import 'vue3-org-chart/dist/style.css'
+
+const app = createApp(App)
+
+app.use(Vue3OrgChart)
+
+app.mount('#app') 
+```
+
+#### Vue Template
+for more detailed example, please check the [examples](examples) folder
+```vue 
+<div>
+    <vue3-org-chart json="YOUR_DATA_JSON_URL">
+        <template #node="{item, nodes, show, handleChildren}">
+            <div>{{item.name}}</div>
+            <button v-if="nodes.length" @click="handleChildren"> {{ show ? '-' : '+' }}</button>
+        </template>
+    </vue3-org-chart>
+</div>
+```
 
 ### Collaboration
 If you want to contribute to the project, please feel free to fork the repository and submit your changes as a pull request. Ensure that the changes you submit are applicable for general use rather than specific to your project.
