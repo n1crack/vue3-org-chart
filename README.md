@@ -1,8 +1,9 @@
-##
-# vue3-org-chart
+## Vue3 Org Chart
+
+[![GitHub](https://img.shields.io/github/license/n1crack/vue3-org-chart)](https://github.com/n1crack/vue3-org-chart/blob/master/LICENSE) 
+[![npm](https://img.shields.io/npm/v/vue3-org-chart)](https://www.npmjs.com/package/vue3-org-chart)
 
 ### About
-
 Vue3 Org Chart is a simple and lightweight organization chart component for Vue3. It is highly customizable.
 
 <img width="500" alt="image" src="https://github.com/n1crack/vue3-org-chart/assets/712404/b168b58c-dc63-4968-93f8-f3e76cc5ccae">
