@@ -51,7 +51,7 @@ If you want to contribute to the project, please feel free to fork the repositor
 
 ### Dependencies
  - [Vue3](https://vuejs.org/)
- - [panzoom](...)  : Zoom/Pan Utility
+ - [panzoom](https://github.com/anvaka/panzoom)  : Zoom/Pan Utility
 
 
 ### License
