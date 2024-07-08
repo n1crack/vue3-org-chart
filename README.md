@@ -50,8 +50,7 @@ If you want to contribute to the project, please feel free to fork the repositor
 
 ### Dependencies
  - [Vue3](https://vuejs.org/)
- - [panzoom](...)  : Zoom Utility
- - [lodash](https://github.com/ThibaultJanBeyer/DragSelect/) : collection of utilities for manipulating arrays and objects
+ - [panzoom](...)  : Zoom/Pan Utility
 
 
 ### License
