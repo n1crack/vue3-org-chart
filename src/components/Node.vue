@@ -37,7 +37,7 @@ const props = defineProps({
 const element = ref(null);
 const data = inject('data');
 const show = ref(false);
-const item = collection.find(data, {id: props.id});
+const item = collection.find(data.value, {id: props.id});
 
 const panzoomInstance = inject('panzoomInstance');
 const scene = inject('scene');
@@ -72,7 +72,7 @@ const goToNode = () => {
 };
 
 const getByParentId = (parentId) => {
-  return collection.filter(data, {parentId});
+  return collection.filter(data.value, {parentId});
 };
 
 const nodes = reactive(getByParentId(props.id));

@@ -3,7 +3,7 @@
     <button @click="reset">Reset Zoom</button>
     <div ref="container" class="vue3-org-chart-container">
       <div ref="scene" class="vue3-org-chart-scene">
-        <Node v-if="data.length" :id="getRootId()" key="root">
+        <Node v-if="treeData.length" :id="getRootId()" key="root">
           <template #node="{item, nodes, show, handleChildren}">
             <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
           </template>
@@ -28,12 +28,35 @@ const container = ref(null);
 
 const props = defineProps({
   data: {
-    type: Array
+    type: Array, 
+    default: () => []
+  },
+  json: {
+    type: String,
+    default: ''
   }
 });
 
+const fetchJsonData = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data; 
+};
+
+const treeData = ref(props.data);
+
+onMounted( async () => {
+  if(props.json) {
+    const data = await fetchJsonData(props.json);
+    treeData.value = data;
+  }
+});
+
+provide('data', treeData);
+
+
 const getRoot = () => {
-  return collection.find(props.data, {parentId: ""});
+  return collection.find(treeData.value, {parentId: ""});
 };
 
 const getRootId = () => {
@@ -43,7 +66,7 @@ const panzoomInstance = ref(null);
 provide('panzoomInstance', panzoomInstance);
 provide('scene', scene);
 provide('container', container);
-provide('data', props.data);
+
 
 onMounted(() => {
    panzoomInstance.value = panzoom(scene.value, {
