@@ -30,13 +30,12 @@
 <script setup>
 import {ref, reactive, inject} from 'vue';
 import collection from 'lodash/collection';
-import data from '../../sample.json';
 
 const props = defineProps({
   id: String,
 });
 const element = ref(null);
-
+const data = inject('data');
 const show = ref(false);
 const item = collection.find(data, {id: props.id});
 

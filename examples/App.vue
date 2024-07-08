@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <vue3-org-chart>
+    <vue3-org-chart :data="data">
         <template #node="{item, nodes, show, handleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
@@ -20,8 +20,228 @@
     </vue3-org-chart>
   </div>
 </template>
-<style>
+<script setup>
 
+const data = [
+    {
+      "name": "John Doe",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome38@example.com",
+      "id": "A-8066",
+      "parentId": ""
+    },
+    {
+      "name": "Davolio Nancy",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8067",
+      "parentId": "A-8066"
+    },
+    {
+      "name": "Jane Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome4@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8068",
+      "parentId": "A-8066"
+    },
+    {
+      "name": "Jane Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome4@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8069",
+      "parentId": "A-8066"
+    },
+    {
+      "name": "Jane Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome4@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8070",
+      "parentId": "A-8066"
+    },
+    {
+      "name": "Jane Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome4@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8071",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Jane Doe",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Linear Manager",
+      "id": "A-8072",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Peacock Margaret",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CEO",
+      "id": "A-673",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Buchanan Steven",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Head of direction",
+      "id": "A-8074",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Adam Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior sales manager",
+      "id": "A-8075",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "King Robert",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Sales Manager",
+      "id": "A-8076",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "West Adam",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "CTO",
+      "id": "A-8077",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Carlos Smith",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Trader",
+      "id": "A-8078",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Yoshi Nagase",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Head of laboratory",
+      "id": "A-8079",
+      "parentId": "A-8067"
+    },
+    {
+      "name": "Peter Wilson",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Head of channels",
+      "id": "A-8080",
+      "parentId": "A-8068"
+    },
+    {
+      "name": "Carlos Diaz",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Android Developer",
+      "id": "A-8081",
+      "parentId": "A-8068"
+    },
+    {
+      "name": "Sven Petersen",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Developer",
+      "id": "A-8082",
+      "parentId": "A-8068"
+    },
+    {
+      "name": "Peter Wilson",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Head of channels",
+      "id": "A-8083",
+      "parentId": "A-8069"
+    },
+    {
+      "name": "Carlos Diaz",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Android Developer",
+      "id": "A-8084",
+      "parentId": "A-8069"
+    },
+    {
+      "name": "Sven Petersen",
+      "imageUrl": "https://i.pravatar.cc/150?u=awesome3@example.com",
+      "area": "Corporate",
+      "profileUrl": "http://example.com/employee/profile",
+      "office": "CEO office",
+      "tags": "Ceo,tag1, tag2",
+      "positionName": "Senior Developer",
+      "id": "A-8085",
+      "parentId": "A-8069"
+    },
+];
+</script>
+
+<style>
 body {
   margin: 0;
   background: #eeeeee;
