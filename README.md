@@ -10,6 +10,7 @@ Vue3 Org Chart is a simple and lightweight organization chart component for Vue3
 
 ### Demo
 Playground : [https://playcode.io/vue3orgchart](https://playcode.io/vue3orgchart)
+
 Demo : [https://vue3orgchart.playcode.io](https://vue3orgchart.playcode.io)
 
 ### Installation
