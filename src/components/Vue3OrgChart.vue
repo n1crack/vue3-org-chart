@@ -1,6 +1,5 @@
 <template>
   <div class="vue3-org-chart">
-    <button @click="reset">Reset Zoom</button>
     <div ref="container" class="vue3-org-chart-container">
       <div ref="scene" class="vue3-org-chart-scene">
         <Node v-if="treeData.length" :id="getRootId()" key="root">
@@ -9,7 +8,9 @@
           </template>
         </Node>
         <div v-else>
+          <slot name="no-data">
             No data
+          </slot>
         </div>
       </div>
     </div>
@@ -35,12 +36,7 @@ const props = defineProps({
   }
 });
 
-const fetchJsonData = async (url) => {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data; 
-};
-
+const emit = defineEmits(['onReady']);
 const treeData = ref(props.data);
 const panzoomInstance = ref();
 
@@ -48,10 +44,21 @@ provide('data', treeData);
 provide('panzoomInstance', panzoomInstance);
 provide('container', container);
 
+const fetchJsonData = async (url) => {
+  const response = await fetch(url);
+  return await response.json();
+};
+
 onMounted( async () => {
   if(props.json) {
     treeData.value = await fetchJsonData(props.json);
   }
+  // provide useful functions to the parent component
+  emit('onReady', {
+    api: {
+      reset
+    }
+  })
 });
 
 onMounted(() => {

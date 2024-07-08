@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <vue3-org-chart json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
+
+    <button @click="reset">Reset Zoom</button>
+
+
+    <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
+      <vue3-org-chart @onReady="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
         <template #node="{item, nodes, show, handleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
@@ -17,9 +22,27 @@
                 </button>
             </div>
         </template>
-    </vue3-org-chart>
+
+        <template #no-data>
+            <div style="color:blue; text-align: center;">
+                No data
+            </div>
+        </template>
+      </vue3-org-chart>
+    </div>
   </div>
 </template>
+
+<script setup>
+import {ref} from "vue";
+
+const reset = ref(null);
+
+const initVue3OrgChart = ({api}) => {
+     reset.value = api.reset;
+}
+
+</script>
 
 <style>
 body {

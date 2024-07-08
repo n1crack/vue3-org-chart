@@ -1,16 +1,10 @@
 :root {
-    --voc-container-min-height: 70vh;
-    --voc-container-border: 1px solid #e1e1e1;
-    --voc-container-bg-color: white;
-    --voc-container-border-radius: 5px;
+    --vue3-org-chart-container-min-height: 70vh;
 }
 
 .vue3-org-chart {
     .vue3-org-chart-container {
-        min-height: var(--voc-container-min-height);
-        border-radius: var(--voc-container-border-radius);
-        border: var(--voc-container-border);
-        background-color: var(--voc-container-bg-color);
+        min-height: var(--vue3-org-chart-container-min-height);
         overflow: hidden;
     }
 
