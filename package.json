@@ -38,8 +38,6 @@
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@vueuse/core": "^10.11.0",
-    "lodash": "^4.17.21",
     "panzoom": "^9.4.3",
     "vue": "^3.2.0"
   }

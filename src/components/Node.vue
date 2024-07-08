@@ -29,7 +29,6 @@
 
 <script setup>
 import {ref, reactive, inject} from 'vue';
-import collection from 'lodash/collection';
 
 const props = defineProps({
   id: String,
@@ -37,17 +36,10 @@ const props = defineProps({
 const element = ref(null);
 const data = inject('data');
 const show = ref(false);
-const item = collection.find(data.value, {id: props.id});
+const item = data.value.find((item) => item.id === props.id);
 
 const panzoomInstance = inject('panzoomInstance');
-const scene = inject('scene');
 const container = inject('container');
-
-// onMounted(
-//   () => {
-//     scene.value.addEventListener('click', handleChildren);
-//   }
-// )
 
 const handleChildren = () => {
   if (!nodes.length) return;
@@ -72,7 +64,7 @@ const goToNode = () => {
 };
 
 const getByParentId = (parentId) => {
-  return collection.filter(data.value, {parentId});
+  return data.value.filter((item) => item.parentId === parentId);
 };
 
 const nodes = reactive(getByParentId(props.id));

@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [
         vue(),
     ],
- 
+
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.js'),
@@ -20,12 +20,9 @@ export default defineConfig({
             // into your library
             external: [
                 'vue',
-                '@vueuse/core',
-                'panzoom',
-                'lodash',
+                'panzoom'
             ],
             output: {
-
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {

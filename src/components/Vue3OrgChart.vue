@@ -17,10 +17,8 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, provide, ref} from 'vue';
+import {onMounted, provide, ref} from 'vue';
 import Node from './Node.vue';
-import collection from 'lodash/collection';
-import arr from 'lodash/array';
 import panzoom from "panzoom";
 
 const scene = ref(null);
@@ -44,29 +42,17 @@ const fetchJsonData = async (url) => {
 };
 
 const treeData = ref(props.data);
+const panzoomInstance = ref();
+
+provide('data', treeData);
+provide('panzoomInstance', panzoomInstance);
+provide('container', container);
 
 onMounted( async () => {
   if(props.json) {
-    const data = await fetchJsonData(props.json);
-    treeData.value = data;
+    treeData.value = await fetchJsonData(props.json);
   }
 });
-
-provide('data', treeData);
-
-
-const getRoot = () => {
-  return collection.find(treeData.value, {parentId: ""});
-};
-
-const getRootId = () => {
-  return getRoot().id;
-};
-const panzoomInstance = ref(null);
-provide('panzoomInstance', panzoomInstance);
-provide('scene', scene);
-provide('container', container);
-
 
 onMounted(() => {
    panzoomInstance.value = panzoom(scene.value, {
@@ -91,6 +77,14 @@ const reset = () => {
     } else { 
         panzoomInstance.value.smoothMoveTo(fixeX, fixeY, 1)
     }
+};
+
+const getRoot = () => {
+  return treeData.value.find((item) => item.parentId === "" || !item.parentId);
+};
+
+const getRootId = () => {
+  return getRoot().id;
 };
 
 </script>
