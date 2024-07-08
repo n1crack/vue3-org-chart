@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <vue-org-chart>
+    <vue3-org-chart>
         <template #node="{item, nodes, show, handleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
@@ -17,7 +17,7 @@
                 </button>
             </div>
         </template>
-    </vue-org-chart>
+    </vue3-org-chart>
   </div>
 </template>
 <style>
@@ -43,7 +43,7 @@ body {
 
 .node-item {
   display: flex;
-  width: 16rem;
+  width: 12rem;
   border-radius: 0.35rem;
   border: 1px solid #e2e8f0;
   padding: 0.5rem;

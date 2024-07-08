@@ -1,4 +1,4 @@
-import VueOrgChart from './components/OrgChart.vue';
+import Vue3OrgChart from './components/Vue3OrgChart.vue';
 import './assets/css/style.scss';
 
 export default {
@@ -8,7 +8,7 @@ export default {
      */
     install(app, options = {}) {
         // define main component
-        app.component("VueOrgChart", VueOrgChart);
+        app.component("Vue3OrgChart", Vue3OrgChart);
     }
 };
 

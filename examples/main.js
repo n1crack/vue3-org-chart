@@ -1,8 +1,8 @@
 import {createApp} from 'vue'
 import App from './App.vue'
-import VueOrgChart from '../src/index.js'
+import Vue3OrgChart from '../src'
 
 const app = createApp(App);
 
-app.use(VueOrgChart)
+app.use(Vue3OrgChart)
 app.mount('#app')
