@@ -66,7 +66,7 @@ const goToNode = () => {
   const elementRect = element.value.getBoundingClientRect();
 
   const containerCenterX = rect.x + rect.width/2;
-  const containerCenterY = rect.y + rect.height/2;
+  const containerCenterY = rect.y + rect.height/4;
 
 
   const elementCenterX = elementRect.x + elementRect.width/2;
@@ -75,7 +75,6 @@ const goToNode = () => {
   const dy = containerCenterY - elementCenterY;
 
   panzoomInstance.value.moveBy( dx, dy, true)
-
 };
 
 function getCanvasCoords(x,y){

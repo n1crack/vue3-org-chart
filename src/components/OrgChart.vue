@@ -1,5 +1,6 @@
 <template>
   <div class="vue3-org-chart">
+    <button @click="reset" class="border bg-gray-100 hover:bg-gray-50 px-2 py-1">Reset Zoom</button>
     <div ref="container" class="min-h-[70vh] border rounded bg-white overflow-hidden">
       <div ref="scene" class="flex w-full justify-center">
         <Node :id="getRootId()" key="root">
@@ -35,7 +36,7 @@ provide('scene', scene);
 provide('container', container);
 
 onMounted(() => {
-  const abc = panzoomInstance.value = panzoom(scene.value, {
+   panzoomInstance.value = panzoom(scene.value, {
     zoomDoubleClickSpeed: 1.4,
     maxZoom: 5,
     minZoom: 0.1,
@@ -43,9 +44,21 @@ onMounted(() => {
     initialZoom: 1,
     bounds: false,
   });
-
-
-  panzoomInstance.value.moveTo(0, 250);
 })
+
+
+const reset = () => {
+    const xys = panzoomInstance.value.getTransform()
+    const fixeX = 0
+    const fixeY = 0
+    if(xys.scale !== 1) { // calculate the point that should not move
+        const fScale = 1 - xys.scale
+        const fixeX = xys.x / fScale
+        const fixeY = xys.y / fScale
+        panzoomInstance.value.smoothZoomAbs(fixeX, fixeY, 1)
+    } else { 
+        panzoomInstance.value.smoothMoveTo(fixeX, fixeY, 1)
+    }
+};
 
 </script>

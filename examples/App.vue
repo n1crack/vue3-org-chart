@@ -11,7 +11,6 @@
           <div>
             <div>{{ item.id }} ({{ nodes.length }})</div>
             <div>{{ item.name }}</div>
-            <div> {{ show }}</div>
           </div>
         </div>
         <div class="text-center">
