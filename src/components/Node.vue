@@ -36,7 +36,9 @@ const props = defineProps({
 const element = ref(null);
 const data = inject('data');
 const show = ref(false);
+
 const item = data.value.find((item) => item.id === props.id);
+const nodes = reactive(data.value.filter((item) => item.parentId === props.id));
 
 const panzoomInstance = inject('panzoomInstance');
 const container = inject('container');
@@ -63,10 +65,5 @@ const goToNode = () => {
   panzoomInstance.value.moveBy( dx, dy, true)
 };
 
-const getByParentId = (parentId) => {
-  return data.value.filter((item) => item.parentId === parentId);
-};
-
-const nodes = reactive(getByParentId(props.id));
 
 </script>
