@@ -1,8 +1,8 @@
 <template>
   <div class="vue3-org-chart">
-    <button @click="reset" class="border bg-gray-100 hover:bg-gray-50 px-2 py-1">Reset Zoom</button>
-    <div ref="container" class="min-h-[70vh] border rounded bg-white overflow-hidden">
-      <div ref="scene" class="flex w-full justify-center">
+    <button @click="reset">Reset Zoom</button>
+    <div ref="container" class="vue3-org-chart-container">
+      <div ref="scene" class="vue3-org-chart-scene">
         <Node :id="getRootId()" key="root">
           <template #node="{item, nodes, show, handleChildren}">
             <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>

@@ -1,29 +1,27 @@
 <template>
   <div class="wrapper">
     <vue-org-chart>
-
-      <template #node="{item, nodes, show, handleChildren}">
-        <div class="flex space-x-2 w-64 p-2 border rounded hover:bg-slate-200"
-             :class="{'border-indigo-300 bg-indigo-100': show, 'bg-slate-50' : !show }">
-          <figure>
-            <img class="w-12 h-12 rounded-full" :src="item.imageUrl" alt="avatar">
-          </figure>
-          <div>
-            <div>{{ item.id }} ({{ nodes.length }})</div>
-            <div>{{ item.name }}</div>
-          </div>
-        </div>
-        <div class="text-center">
-          <button class="border w-4 h-4 bg-white text-xs" v-if="nodes.length" @click="handleChildren">
-            {{ show ? '-' : '+' }}
-          </button>
-        </div>
-      </template>
-
+        <template #node="{item, nodes, show, handleChildren}">
+            <div class="node-item" :class="{'active': show, 'passive' : !show }">
+            <div>
+                <img class="avatar" :src="item.imageUrl" alt="avatar">
+            </div>
+                <div>
+                    <div>{{ item.id }} ({{ nodes.length }})</div>
+                    <div>{{ item.name }}</div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="node-btn-toggle" v-if="nodes.length" @click="handleChildren">
+                    {{ show ? '-' : '+' }}
+                </button>
+            </div>
+        </template>
     </vue-org-chart>
   </div>
 </template>
 <style>
+
 body {
   margin: 0;
   background: #eeeeee;
@@ -42,4 +40,44 @@ body {
   cursor: pointer;
   outline: none;
 }
+
+.node-item {
+  display: flex;
+  width: 16rem;
+  border-radius: 0.35rem;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
+}
+
+.node-item > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 1rem;
+}
+.node-item:hover {
+  background-color: rgb(226 232 240);
+}
+.node-item.active {
+  border-color: rgb(165 180 252);
+  background-color: rgb(224 231 255);
+}
+.node-item.passive {
+  background-color: rgb(248 250 252)
+}
+
+.node-item .avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
+}
+
+.node-btn-toggle {
+    padding: 1px;
+  cursor: pointer;
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid #e2e8f0;
+  background-color: rgb(255 255 255);
+  font-size: 0.75rem;
+  line-height: 10px;
+}
+
 </style>

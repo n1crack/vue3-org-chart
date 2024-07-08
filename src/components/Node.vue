@@ -1,28 +1,28 @@
 <template>
-  <div class="relative flex flex-col items-center space-2">
+  <div class="vue3-org-chart-node">
     <slot name="top-border"/>
-    <div class="w-min inline-block mt-2 mx-2" ref="element">
-      <div v-if="item.parentId" class="absolute border-r h-2 -mt-2 left-1/2"></div>
+    <div class="vue3-org-chart-node-element" ref="element">
+      <div v-if="item.parentId" class="vue3-org-chart-node-element-top-line"></div>
       <div tabindex="0" @keydown.self.space.prevent="goToNode">
         <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
       </div>
-      <div v-if="nodes.length && show" class="mx-auto border-l left-1/2 w-[1px] h-2"></div>
+      <div v-if="nodes.length && show" class="vue3-org-chart-node-element-bottom-line"></div>
     </div>
 
     <Transition name="nodeTransition">
-      <NodeContainer v-if="nodes.length && show">
+      <div class="vue3-org-chart-node-container" v-if="nodes.length && show">
         <Node v-for="(node, index) in nodes" :key="node.id" :id="node.id" ref="nodeRefs">
           <template #top-border>
-            <div class="relative flex w-full before:block after:block before:w-1/2 after:w-1/2" :class="{
-              'before:border-t before:absolute before:left-0' : show && index !== 0,
-              'after:border-t after:absolute after:right-0' : show && index !== nodes.length - 1,
+            <div class="vue3-org-chart-node-element-horizontal-line" :class="{
+              'left' : show && index !== 0,
+              'right' : show && index !== nodes.length - 1,
             }"></div>
           </template>
           <template #node="{item, nodes, show, handleChildren}">
             <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
           </template>
         </Node>
-      </NodeContainer>
+      </div>
     </Transition>
   </div>
 </template>
@@ -31,9 +31,6 @@
 import {ref, reactive, inject} from 'vue';
 import collection from 'lodash/collection';
 import data from '../../sample.json';
-
-import NodeContainer from './NodeContainer.vue';
-import panzoom from "panzoom";
 
 const props = defineProps({
   id: String,
@@ -62,12 +59,10 @@ const handleChildren = () => {
 const goToNode = () => {
   // get canvas rectangle with absolute position of element
   const rect = container.value.getBoundingClientRect();
-  const sceneRect = scene.value.getBoundingClientRect();
   const elementRect = element.value.getBoundingClientRect();
 
   const containerCenterX = rect.x + rect.width/2;
   const containerCenterY = rect.y + rect.height/4;
-
 
   const elementCenterX = elementRect.x + elementRect.width/2;
   const elementCenterY = elementRect.y + elementRect.height/2;
@@ -77,10 +72,6 @@ const goToNode = () => {
   panzoomInstance.value.moveBy( dx, dy, true)
 };
 
-function getCanvasCoords(x,y){
-    return panzoomInstance.value.getTransform();
-}
-
 const getByParentId = (parentId) => {
   return collection.filter(data, {parentId});
 };
@@ -88,22 +79,3 @@ const getByParentId = (parentId) => {
 const nodes = reactive(getByParentId(props.id));
 
 </script>
-
-<style>
-.nodeTransition-leave-active {
-  transition: all 0.2s ease;
-}
-
-.nodeTransition-leave-to {
-  opacity: 0;
-  scale: 0.20;
-}
-
-.nodeTransition-enter-active {
-  transition: all 0.3s ease;
-}
-
-.nodeTransition-enter-from {
-  scale: 0.70;
-}
-</style>
