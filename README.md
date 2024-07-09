@@ -35,6 +35,7 @@ app.use(Vue3OrgChart)
 app.mount('#app') 
 ```
 
+
 #### Vue Template
 for more detailed example, please check the [examples](examples) folder
 ```vue 
@@ -47,6 +48,24 @@ for more detailed example, please check the [examples](examples) folder
     </vue3-org-chart>
 </div>
 ```
+
+
+
+#### Styling
+
+You have full control over node elements, In addition to that there are some css variables for lines and container height or node spacing..
+
+```css 
+:root {
+    --vue3-org-chart-container-min-height: 70vh;
+    --vue3-org-chart-line-top: 1rem;
+    --vue3-org-chart-line-bottom: 1rem;
+    --vue3-org-chart-node-space-x:  1rem;
+    --vue3-org-chart-line-color: blue;
+}
+```
+
+![image](https://github.com/n1crack/vue3-org-chart/assets/712404/9eb4df4b-2156-4797-be2f-c5074ff8c91b)
 
 ### Collaboration
 If you want to contribute to the project, please feel free to fork the repository and submit your changes as a pull request. Ensure that the changes you submit are applicable for general use rather than specific to your project.
