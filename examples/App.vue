@@ -35,6 +35,7 @@
 
 <script setup>
 import {ref} from "vue";
+// alternative way to import, it is already imported in main.js
 // import {Vue3OrgChart} from "../dist/vue3-org-chart.js";
 // import "../dist/style.css";
 
