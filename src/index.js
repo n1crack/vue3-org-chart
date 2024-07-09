@@ -1,9 +1,8 @@
 import Vue3OrgChart from './components/Vue3OrgChart.vue';
 import './assets/css/style.scss';
 
-export { Vue3OrgChart };
 
-export default {
+const Vue3OrgChartPlugin = {
     /**
      * @param {import('vue').App} app
      * @param options
@@ -15,3 +14,4 @@ export default {
 };
 
 
+export { Vue3OrgChart, Vue3OrgChartPlugin };

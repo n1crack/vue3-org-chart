@@ -25,14 +25,24 @@ JS entry point
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import Vue3OrgChart from 'vue3-org-chart'
+import { Vue3OrgChartPlugin } from 'vue3-org-chart'
 import 'vue3-org-chart/dist/style.css'
 
 const app = createApp(App)
 
-app.use(Vue3OrgChart)
+app.use(Vue3OrgChartPlugin)
 
 app.mount('#app') 
+```
+
+```javascript
+// alternatively, you can import the component directly
+// to use component, Vue3OrgChart instead of Vue3OrgChartPlugin
+<script setup>
+   import { Vue3OrgChart } from 'vue3-org-chart' 
+   import 'vue3-org-chart/dist/style.css' 
+   // ...
+</script>
 ```
 
 
@@ -42,14 +52,14 @@ for more detailed example, please check the [examples](examples) folder
 <div>
     <vue3-org-chart json="YOUR_DATA_JSON_URL">
         <template #node="{item, nodes, show, handleChildren}">
+            <!-- Node Element / TEMPLATE START -->
             <div>{{item.name}}</div>
             <button v-if="nodes.length" @click="handleChildren"> {{ show ? '-' : '+' }}</button>
+            <!-- Node Element / TEMPLATE END -->
         </template>
     </vue3-org-chart>
 </div>
 ```
-
-
 
 #### Styling
 
