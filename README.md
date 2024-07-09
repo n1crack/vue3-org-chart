@@ -58,9 +58,9 @@ You have full control over node elements, In addition to that there are some css
 ```css 
 :root {
     --vue3-org-chart-container-min-height: 70vh;
-    --vue3-org-chart-line-top: 1rem;
-    --vue3-org-chart-line-bottom: 1rem;
-    --vue3-org-chart-node-space-x:  1rem;
+    --vue3-org-chart-line-top: .5rem;
+    --vue3-org-chart-line-bottom: .5rem;
+    --vue3-org-chart-node-space-x:  .5rem;
     --vue3-org-chart-line-color: blue;
 }
 ```
