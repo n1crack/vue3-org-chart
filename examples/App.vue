@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper"
+       style="--vue3-org-chart-line-color:pink">
 
     <button @click="reset">Reset Zoom</button>
 
