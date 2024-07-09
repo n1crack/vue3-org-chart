@@ -1,5 +1,9 @@
 :root {
     --vue3-org-chart-container-min-height: 70vh;
+    --vue3-org-chart-line-top: 1rem;
+    --vue3-org-chart-line-bottom: 1rem;
+    --vue3-org-chart-node-space-x:  1rem;
+    --vue3-org-chart-line-color: blue;
 }
 
 .vue3-org-chart {
@@ -22,28 +26,27 @@
     }
 
     .vue3-org-chart-node-element {
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-        margin-top: 0.5rem;
+        margin: var(--vue3-org-chart-line-top) calc(var(--vue3-org-chart-node-space-x) / 2) var(--vue3-org-chart-line-bottom);
         display: inline-block;
         width: min-content;
     }
 
     .vue3-org-chart-node-element-top-line {
-        margin-top: -0.5rem;
+        margin-top: calc(-1 * var(--vue3-org-chart-line-top));
         position: absolute;
         left: 50%;
-        height: 0.5rem;
-        border-left: 1px solid #e1e1e1;
+        height: var(--vue3-org-chart-line-top);
+        width: 1px;
+        border-left: 1px solid var(--vue3-org-chart-line-color);
     }
 
     .vue3-org-chart-node-element-bottom-line {
-        margin-left: auto;
-        margin-right: auto;
+        margin-bottom: calc(-1 * var(--vue3-org-chart-line-bottom));
+        position: absolute;
         left: 50%;
-        height: 0.5rem;
+        height: var(--vue3-org-chart-line-bottom);
         width: 1px;
-        border-left: 1px solid #e1e1e1;
+        border-left: 1px solid var(--vue3-org-chart-line-color);
     }
 
     .vue3-org-chart-node-element-horizontal-line {
@@ -55,7 +58,7 @@
             content: "";
             display: block;
             width: 50%;
-            border-top: 1px solid #e1e1e1;
+            border-top: 1px solid var(--vue3-org-chart-line-color);
             position: absolute;
             left: 0;
         }
@@ -64,7 +67,7 @@
             content: "";
             display: block;
             width: 50%;
-            border-top: 1px solid #e1e1e1;
+            border-top: 1px solid var(--vue3-org-chart-line-color);
             position: absolute;
             right: 0;
         }

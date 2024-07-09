@@ -3,13 +3,12 @@
 
     <button @click="reset">Reset Zoom</button>
 
-
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @onReady="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
         <template #node="{item, nodes, show, handleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
-                <img class="avatar" :src="item.imageUrl" alt="avatar">
+                <img v-if="item.imageUrl" class="avatar" :src="item.imageUrl" alt="avatar">
             </div>
                 <div>
                     <div>{{ item.id }} ({{ nodes.length }})</div>
@@ -17,7 +16,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <button class="node-btn-toggle" v-if="nodes.length" @click="handleChildren">
+                <button class="node-btn-toggle" v-if="nodes.length" @click="handleChildren" @touchend="handleChildren">
                     {{ show ? '-' : '+' }}
                 </button>
             </div>
@@ -35,6 +34,8 @@
 
 <script setup>
 import {ref} from "vue";
+// import {Vue3OrgChart} from "../dist/vue3-org-chart.js";
+// import "../dist/style.css";
 
 const reset = ref(null);
 

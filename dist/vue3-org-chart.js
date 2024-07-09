@@ -1,6 +1,6 @@
-import { ref as h, inject as N, reactive as V, resolveComponent as j, openBlock as a, createElementBlock as u, renderSlot as g, createElementVNode as _, unref as $, createCommentVNode as z, withKeys as S, withModifiers as X, createVNode as Y, Transition as Z, withCtx as w, Fragment as D, renderList as K, createBlock as B, normalizeClass as M, provide as R, onMounted as b, createTextVNode as A } from "vue";
-import E from "panzoom";
-const O = { class: "vue3-org-chart-node" }, F = {
+import { ref as h, inject as N, reactive as T, resolveComponent as j, openBlock as a, createElementBlock as u, renderSlot as g, createElementVNode as _, unref as $, createCommentVNode as z, withKeys as S, withModifiers as X, createVNode as Y, Transition as Z, withCtx as w, Fragment as D, renderList as K, createBlock as V, normalizeClass as M, provide as R, onMounted as b, createTextVNode as O } from "vue";
+import A from "panzoom";
+const E = { class: "vue3-org-chart-node" }, F = {
   key: 0,
   class: "vue3-org-chart-node-element-top-line"
 }, J = ["onKeydown"], L = {
@@ -15,7 +15,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
     id: String
   },
   setup(m) {
-    const v = m, f = h(null), p = N("data"), n = h(!1), y = p.value.find((t) => t.id === v.id), o = V(p.value.filter((t) => t.parentId === v.id)), c = N("panzoomInstance"), k = N("container"), x = () => {
+    const v = m, f = h(null), p = N("data"), n = h(!1), y = p.value.find((t) => t.id === v.id), o = T(p.value.filter((t) => t.parentId === v.id)), c = N("panzoomInstance"), k = N("container"), x = () => {
       o.length && (n.value = !n.value, C());
     }, C = () => {
       const t = k.value.getBoundingClientRect(), e = f.value.getBoundingClientRect(), i = t.x + t.width / 2, r = t.y + t.height / 4, s = e.x + e.width / 2, l = e.y + e.height / 2, d = i - s, I = r - l;
@@ -23,7 +23,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
     };
     return (t, e) => {
       const i = j("Node", !0);
-      return a(), u("div", O, [
+      return a(), u("div", E, [
         g(t.$slots, "top-border"),
         _("div", {
           class: "vue3-org-chart-node-element",
@@ -47,7 +47,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
         Y(Z, { name: "nodeTransition" }, {
           default: w(() => [
             o.length && n.value ? (a(), u("div", q, [
-              (a(!0), u(D, null, K(o, (r, s) => (a(), B(i, {
+              (a(!0), u(D, null, K(o, (r, s) => (a(), V(i, {
                 key: r.id,
                 id: r.id,
                 ref_for: !0,
@@ -61,12 +61,12 @@ const O = { class: "vue3-org-chart-node" }, F = {
                     }])
                   }, null, 2)
                 ]),
-                node: w(({ item: l, nodes: d, show: I, handleChildren: T }) => [
+                node: w(({ item: l, nodes: d, show: I, handleChildren: B }) => [
                   g(t.$slots, "node", {
                     item: l,
                     nodes: d,
                     show: I,
-                    handleChildren: T
+                    handleChildren: B
                   })
                 ]),
                 _: 2
@@ -102,7 +102,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
         }
       });
     }), b(() => {
-      c.value = E(f.value, {
+      c.value = A(f.value, {
         zoomDoubleClickSpeed: 1.4,
         maxZoom: 5,
         minZoom: 0.1,
@@ -130,7 +130,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
           ref: f,
           class: "vue3-org-chart-scene"
         }, [
-          o.value.length ? (a(), B(G, {
+          o.value.length ? (a(), V(G, {
             id: t(),
             key: "root"
           }, {
@@ -145,7 +145,7 @@ const O = { class: "vue3-org-chart-node" }, F = {
             _: 3
           }, 8, ["id"])) : (a(), u("div", P, [
             g(e.$slots, "no-data", {}, () => [
-              A(" No data ")
+              O(" No data ")
             ])
           ]))
         ], 512)
@@ -162,5 +162,6 @@ const O = { class: "vue3-org-chart-node" }, F = {
   }
 };
 export {
+  Q as Vue3OrgChart,
   ee as default
 };

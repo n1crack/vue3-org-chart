@@ -1,6 +1,8 @@
 import Vue3OrgChart from './components/Vue3OrgChart.vue';
 import './assets/css/style.scss';
 
+export { Vue3OrgChart };
+
 export default {
     /**
      * @param {import('vue').App} app
