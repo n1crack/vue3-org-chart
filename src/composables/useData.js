@@ -1,4 +1,4 @@
-import {onMounted, ref, defineEmits} from "vue";
+import {onMounted, ref} from "vue";
 
 export function useData({initialData, json}) {
     // loading state
