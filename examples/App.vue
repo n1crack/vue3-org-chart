@@ -2,7 +2,9 @@
   <div class="wrapper"
        style="--vue3-org-chart-line-color:pink">
 
-    <button @click="reset">Reset Zoom</button>
+    <button @click="vocApi.zoomReset">Reset Zoom</button>
+    <button @click="vocApi.zoomIn">Zoom In</button>
+    <button @click="vocApi.zoomOut">Zoom Out</button>
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @onReady="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
@@ -39,13 +41,13 @@ import {ref} from "vue";
 // import {Vue3OrgChart} from "../dist/vue3-org-chart.js";
 // import "../dist/style.css";
 
-const reset = ref(null);
+const vocApi = ref(null);
 
 // this function will be called when vue3-org-chart is ready
 // it will pass api object as argument
 // api object contains reset function and some other functions will be added in future
 const initVue3OrgChart = ({api}) => {
-     reset.value = api.reset;
+     vocApi.value = api;
 }
 
 </script>
