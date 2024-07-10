@@ -2,7 +2,7 @@
   <div class="vue3-org-chart">
     <div ref="container" class="vue3-org-chart-container">
       <div ref="scene" class="vue3-org-chart-scene">
-        <Node v-if="data.length" :id="api.getRootId()" key="root">
+        <Node v-if="data.length" :id="api.rootId()" key="root">
           <template #node="{item, nodes, show, toggleChildren}">
             <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
           </template>
@@ -50,7 +50,8 @@ provide('content', {data, loading});
 
 // Api setup, useful functions to interact with the org chart
 import {useApi} from "../composables/useApi.js";
-const api = useApi(instance, data);
+const api = useApi(instance, data, container);
+provide('api', api);
 
 //  emit event when data is loaded and ready, provide api object
 const emit = defineEmits(['onReady']);

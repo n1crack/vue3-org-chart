@@ -13,7 +13,6 @@ export function usePanzoom() {
             zoomDoubleClickSpeed: 1.4,
             maxZoom: 5,
             minZoom: 0.1,
-            initialX: 0,
             initialZoom: 1,
             bounds: false,
         });
