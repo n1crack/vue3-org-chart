@@ -1,77 +1,78 @@
-import { ref as m, inject as b, reactive as S, resolveComponent as X, openBlock as i, createElementBlock as d, renderSlot as _, createElementVNode as C, unref as k, createCommentVNode as V, withKeys as j, withModifiers as D, createVNode as O, Transition as Y, withCtx as w, Fragment as Z, renderList as A, createBlock as z, normalizeClass as K, onMounted as I, provide as B, watch as M, createTextVNode as T } from "vue";
-import E from "panzoom";
-const L = { class: "vue3-org-chart-node" }, P = {
+import { ref as f, inject as z, reactive as R, onMounted as b, resolveComponent as j, openBlock as l, createElementBlock as v, renderSlot as g, createElementVNode as k, unref as _, createCommentVNode as N, withKeys as D, withModifiers as O, createVNode as S, Transition as H, withCtx as w, Fragment as P, renderList as Z, createBlock as T, normalizeClass as A, provide as V, watch as E, createTextVNode as B } from "vue";
+import K from "panzoom";
+const L = { class: "vue3-org-chart-node" }, M = {
   key: 0,
   class: "vue3-org-chart-node-element-top-line"
-}, F = ["onKeydown"], J = {
+}, X = {
   key: 1,
   class: "vue3-org-chart-node-element-bottom-line"
-}, q = {
+}, Y = {
   key: 0,
   class: "vue3-org-chart-node-container"
-}, G = {
+}, F = {
   __name: "Node",
   props: {
     id: String
   },
-  setup(e) {
-    const o = e, s = m(null), { instance: r, container: u } = b("panzoom"), { data: t } = b("content"), n = m(!1), h = t.value.find((l) => l.id === o.id), a = S(t.value.filter((l) => l.parentId === o.id)), y = () => {
-      a.length && (n.value = !n.value, c(s.value));
-    }, c = (l) => {
-      const v = u.value.getBoundingClientRect(), f = l.getBoundingClientRect(), g = v.x + v.width / 2, p = v.y + v.height / 4, $ = f.x + f.width / 2, x = f.y + f.height / 2, N = g - $, R = p - x;
-      r.value.moveBy(N, R, !0);
+  setup(r) {
+    const n = r, o = f(null), { data: a } = z("content"), e = f(!1), s = z("api"), c = s.find(n.id), i = R(a.value.filter((d) => d.parentId === n.id));
+    b(() => {
+      c.parentId || (s.$root.value = o.value, s.reset());
+    });
+    const h = () => {
+      i.length && (e.value = !e.value, s.goToHome(o.value));
     };
-    return (l, v) => {
-      const f = X("Node", !0);
-      return i(), d("div", L, [
-        _(l.$slots, "top-border"),
-        C("div", {
+    return (d, t) => {
+      const m = j("Node", !0);
+      return l(), v("div", L, [
+        g(d.$slots, "top-border"),
+        k("div", {
           class: "vue3-org-chart-node-element",
           ref_key: "element",
-          ref: s
+          ref: o
         }, [
-          k(h).parentId ? (i(), d("div", P)) : V("", !0),
-          C("div", {
+          _(c).parentId ? (l(), v("div", M)) : N("", !0),
+          k("div", {
             tabindex: "0",
-            onKeydown: j(D(c, ["self", "prevent"]), ["space"])
+            onKeydown: t[0] || (t[0] = D(O((u) => _(s).goToHome(o.value), ["self", "prevent"]), ["space"]))
           }, [
-            _(l.$slots, "node", {
-              item: k(h),
-              nodes: a,
-              show: n.value,
-              toggleChildren: y
+            g(d.$slots, "node", {
+              item: _(c),
+              nodes: i,
+              show: e.value,
+              toggleChildren: h
             })
-          ], 40, F),
-          a.length && n.value ? (i(), d("div", J)) : V("", !0)
+          ], 32),
+          i.length && e.value ? (l(), v("div", X)) : N("", !0)
         ], 512),
-        O(Y, { name: "nodeTransition" }, {
+        S(H, { name: "nodeTransition" }, {
           default: w(() => [
-            a.length && n.value ? (i(), d("div", q, [
-              (i(!0), d(Z, null, A(a, (g, p) => (i(), z(f, {
-                key: g.id,
-                id: g.id,
+            i.length && e.value ? (l(), v("div", Y, [
+              (l(!0), v(P, null, Z(i, (u, p) => (l(), T(m, {
+                key: u.id,
+                id: u.id,
                 ref_for: !0,
                 ref: "nodeRefs"
               }, {
                 "top-border": w(() => [
-                  C("div", {
-                    class: K(["vue3-org-chart-node-element-horizontal-line", {
-                      left: n.value && p !== 0,
-                      right: n.value && p !== a.length - 1
+                  k("div", {
+                    class: A(["vue3-org-chart-node-element-horizontal-line", {
+                      left: e.value && p !== 0,
+                      right: e.value && p !== i.length - 1
                     }])
                   }, null, 2)
                 ]),
-                node: w(({ item: $, nodes: x, show: N, toggleChildren: R }) => [
-                  _(l.$slots, "node", {
-                    item: $,
-                    nodes: x,
-                    show: N,
-                    toggleChildren: R
+                node: w(({ item: y, nodes: C, show: $, toggleChildren: I }) => [
+                  g(d.$slots, "node", {
+                    item: y,
+                    nodes: C,
+                    show: $,
+                    toggleChildren: I
                   })
                 ]),
                 _: 2
               }, 1032, ["id"]))), 128))
-            ])) : V("", !0)
+            ])) : N("", !0)
           ]),
           _: 3
         })
@@ -79,57 +80,62 @@ const L = { class: "vue3-org-chart-node" }, P = {
     };
   }
 };
-function H() {
-  const e = m(), o = m(null), s = m(null);
-  function r() {
-    e.value = E(o.value, {
+function J() {
+  const r = f(), n = f(null), o = f(null);
+  function a() {
+    r.value = K(n.value, {
       zoomDoubleClickSpeed: 1.4,
       maxZoom: 5,
       minZoom: 0.1,
-      initialX: 0,
       initialZoom: 1,
       bounds: !1
     });
   }
-  return I(() => {
-    e.value || r();
+  return b(() => {
+    r.value || a();
   }), {
-    scene: o,
-    container: s,
-    instance: e
+    scene: n,
+    container: o,
+    instance: r
   };
 }
-function Q({ initialData: e, json: o }) {
-  const s = m(!0), r = m(e), u = async (t) => await (await fetch(t)).json();
-  return I(async () => {
-    o && (r.value = await u(o)), s.value = !1;
+function q({ initialData: r, json: n }) {
+  const o = f(!0), a = f(r), e = async (s) => await (await fetch(s)).json();
+  return b(async () => {
+    n && (a.value = await e(n)), o.value = !1;
   }), {
-    data: r,
-    loading: s
+    data: a,
+    loading: o
   };
 }
-function U(e, o) {
-  function s() {
-    return o.value.find((t) => t.parentId === "" || !t.parentId);
+function G(r, n, o) {
+  const a = f(null), e = R({ x: 0, y: 40 });
+  function s(t) {
+    return n.value.find((m) => m.id === t);
   }
-  function r() {
-    return s().id;
+  function c() {
+    return n.value.find((t) => t.parentId === "" || !t.parentId);
   }
-  function u() {
-    const t = e.value.getTransform(), n = 0, h = 0;
-    if (t.scale !== 1) {
-      const a = 1 - t.scale, y = t.x / a, c = t.y / a;
-      e.value.smoothZoomAbs(y, c, 1);
-    } else
-      e.value.smoothMoveTo(n, h);
+  function i() {
+    return c().id;
+  }
+  function h() {
+    d(a.value);
+  }
+  function d(t) {
+    const m = o.value.getBoundingClientRect(), u = t.getBoundingClientRect(), p = m.x + m.width / 2 + e.x, y = m.y + e.y, C = u.x + u.width / 2, $ = u.y, I = p - C, x = y - $;
+    r.value.moveBy(I, x, !0);
   }
   return {
-    reset: u,
-    getRoot: s,
-    getRootId: r
+    reset: h,
+    $root: a,
+    root: c,
+    rootId: i,
+    find: s,
+    goToHome: d
   };
 }
-const W = { class: "vue3-org-chart" }, ee = { key: 1 }, te = { key: 0 }, ne = { key: 1 }, oe = {
+const Q = { class: "vue3-org-chart" }, U = { key: 1 }, W = { key: 0 }, ee = { key: 1 }, te = {
   __name: "Vue3OrgChart",
   props: {
     data: {
@@ -142,46 +148,48 @@ const W = { class: "vue3-org-chart" }, ee = { key: 1 }, te = { key: 0 }, ne = { 
     }
   },
   emits: ["onReady"],
-  setup(e, { emit: o }) {
-    const s = e, { instance: r, scene: u, container: t } = H();
-    B("panzoom", { instance: r, scene: u, container: t });
-    const { data: n, loading: h } = Q({ initialData: s.data, json: s.json });
-    B("content", { data: n, loading: h });
-    const a = U(r, n), y = o;
-    return M(() => h.value, (c) => {
-      c || y("onReady", { api: a });
-    }), (c, l) => (i(), d("div", W, [
-      C("div", {
+  setup(r, { emit: n }) {
+    const o = r, { instance: a, scene: e, container: s } = J();
+    V("panzoom", { instance: a, scene: e, container: s });
+    const { data: c, loading: i } = q({ initialData: o.data, json: o.json });
+    V("content", { data: c, loading: i });
+    const h = G(a, c, s);
+    V("api", h);
+    const d = n;
+    return E(() => i.value, (t) => {
+      t || d("onReady", { api: h });
+    }), (t, m) => (l(), v("div", Q, [
+      k("div", {
         ref_key: "container",
-        ref: t,
+        ref: s,
         class: "vue3-org-chart-container"
       }, [
-        C("div", {
+        k("div", {
           ref_key: "scene",
-          ref: u,
+          ref: e,
           class: "vue3-org-chart-scene"
         }, [
-          k(n).length ? (i(), z(G, {
-            id: k(a).getRootId(),
+          _(c).length ? (l(), T(F, {
+            id: _(h).rootId(),
             key: "root"
           }, {
-            node: w(({ item: v, nodes: f, show: g, toggleChildren: p }) => [
-              _(c.$slots, "node", {
-                item: v,
-                nodes: f,
-                show: g,
-                toggleChildren: p
+            node: w(({ item: u, nodes: p, show: y, toggleChildren: C }) => [
+              g(t.$slots, "node", {
+                item: u,
+                nodes: p,
+                show: y,
+                toggleChildren: C
               })
             ]),
             _: 3
-          }, 8, ["id"])) : (i(), d("div", ee, [
-            k(h) ? (i(), d("span", te, [
-              _(c.$slots, "loading", {}, () => [
-                T("Loading...")
+          }, 8, ["id"])) : (l(), v("div", U, [
+            _(i) ? (l(), v("span", W, [
+              g(t.$slots, "loading", {}, () => [
+                B("Loading...")
               ])
-            ])) : (i(), d("span", ne, [
-              _(c.$slots, "no-data", {}, () => [
-                T("No data")
+            ])) : (l(), v("span", ee, [
+              g(t.$slots, "no-data", {}, () => [
+                B("No data")
               ])
             ]))
           ]))
@@ -194,11 +202,11 @@ const W = { class: "vue3-org-chart" }, ee = { key: 1 }, te = { key: 0 }, ne = { 
    * @param {import('vue').App} app
    * @param options
    */
-  install(e, o = {}) {
-    e.component("Vue3OrgChart", oe);
+  install(r, n = {}) {
+    r.component("Vue3OrgChart", te);
   }
 };
 export {
-  oe as Vue3OrgChart,
+  te as Vue3OrgChart,
   re as Vue3OrgChartPlugin
 };
