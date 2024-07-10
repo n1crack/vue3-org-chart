@@ -6,7 +6,7 @@
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @onReady="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
-        <template #node="{item, nodes, show, handleChildren}">
+        <template #node="{item, nodes, show, toggleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
                 <img v-if="item.imageUrl" class="avatar" :src="item.imageUrl" alt="avatar">
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <button class="node-btn-toggle" v-if="nodes.length" @click="handleChildren" @touchend="handleChildren">
+                <button class="node-btn-toggle" v-if="nodes.length" @click="toggleChildren" @touchend="toggleChildren">
                     {{ show ? '-' : '+' }}
                 </button>
             </div>

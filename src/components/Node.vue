@@ -4,7 +4,7 @@
     <div class="vue3-org-chart-node-element" ref="element">
       <div v-if="item.parentId" class="vue3-org-chart-node-element-top-line"></div>
       <div tabindex="0" @keydown.self.space.prevent="goToNode">
-        <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
+        <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
       </div>
       <div v-if="nodes.length && show" class="vue3-org-chart-node-element-bottom-line"></div>
     </div>
@@ -18,8 +18,8 @@
               'right' : show && index !== nodes.length - 1,
             }"></div>
           </template>
-          <template #node="{item, nodes, show, handleChildren}">
-            <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
+          <template #node="{item, nodes, show, toggleChildren}">
+            <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
           </template>
         </Node>
       </div>
@@ -30,29 +30,39 @@
 <script setup>
 import {ref, reactive, inject} from 'vue';
 
+// props
 const props = defineProps({
   id: String,
 });
+
+// element reference
 const element = ref(null);
-const data = inject('data');
+
+// panzoom instance
+const {instance, container} = inject('panzoom');
+
+// content data
+const { data } = inject('content');
+
+// show/hide children nodes
 const show = ref(false);
 
+// get item and children nodes
 const item = data.value.find((item) => item.id === props.id);
 const nodes = reactive(data.value.filter((item) => item.parentId === props.id));
 
-const panzoomInstance = inject('panzoomInstance');
-const container = inject('container');
-
-const handleChildren = () => {
+// toggle visibility of children nodes
+const toggleChildren = () => {
   if (!nodes.length) return;
   show.value = !show.value;
-  goToNode();
+  goToNode(element.value);
 };
 
-const goToNode = () => {
+// center the node in the container
+const goToNode = (element) => {
   // get canvas rectangle with absolute position of element
   const rect = container.value.getBoundingClientRect();
-  const elementRect = element.value.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
 
   const containerCenterX = rect.x + rect.width/2;
   const containerCenterY = rect.y + rect.height/4;
@@ -62,7 +72,7 @@ const goToNode = () => {
   const dx = containerCenterX - elementCenterX;
   const dy = containerCenterY - elementCenterY;
 
-  panzoomInstance.value.moveBy( dx, dy, true)
+  instance.value.moveBy( dx, dy, true)
 };
 
 

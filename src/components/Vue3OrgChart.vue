@@ -2,15 +2,18 @@
   <div class="vue3-org-chart">
     <div ref="container" class="vue3-org-chart-container">
       <div ref="scene" class="vue3-org-chart-scene">
-        <Node v-if="treeData.length" :id="getRootId()" key="root">
-          <template #node="{item, nodes, show, handleChildren}">
-            <slot name="node" :item="item" :nodes="nodes" :show="show" :handleChildren="handleChildren"/>
+        <Node v-if="data.length" :id="api.getRootId()" key="root">
+          <template #node="{item, nodes, show, toggleChildren}">
+            <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
           </template>
         </Node>
         <div v-else>
-          <slot name="no-data">
-            No data
-          </slot>
+            <span v-if="loading">
+              <slot name="loading">Loading...</slot>
+            </span>
+            <span v-else>
+              <slot name="no-data">No data</slot>
+            </span>
         </div>
       </div>
     </div>
@@ -18,16 +21,13 @@
 </template>
 
 <script setup>
-import {onMounted, provide, ref} from 'vue';
+import {provide, watch} from 'vue';
 import Node from './Node.vue';
-import panzoom from "panzoom";
 
-const scene = ref(null);
-const container = ref(null);
-
+// props
 const props = defineProps({
   data: {
-    type: Array, 
+    type: Array,
     default: () => []
   },
   json: {
@@ -36,62 +36,28 @@ const props = defineProps({
   }
 });
 
+// Panzoom setup
+import {usePanzoom} from "../composables/usePanzoom.js";
+
+const {instance, scene, container} = usePanzoom();
+// provide useful functions to the child components
+provide('panzoom', {instance, scene, container});
+
+// Data setup, provide data and loading state to the child components
+import {useData} from "../composables/useData.js";
+const {data, loading} = useData({initialData: props.data, json: props.json});
+provide('content', {data, loading});
+
+// Api setup, useful functions to interact with the org chart
+import {useApi} from "../composables/useApi.js";
+const api = useApi(instance, data);
+
+//  emit event when data is loaded and ready, provide api object
 const emit = defineEmits(['onReady']);
-const treeData = ref(props.data);
-const panzoomInstance = ref();
-
-provide('data', treeData);
-provide('panzoomInstance', panzoomInstance);
-provide('container', container);
-
-const fetchJsonData = async (url) => {
-  const response = await fetch(url);
-  return await response.json();
-};
-
-onMounted( async () => {
-  if(props.json) {
-    treeData.value = await fetchJsonData(props.json);
+watch(() => loading.value, (loadingState) => {
+  if (!loadingState) {
+    emit('onReady', { api})
   }
-  // provide useful functions to the parent component
-  emit('onReady', {
-    api: {
-      reset
-    }
-  })
 });
-
-onMounted(() => {
-   panzoomInstance.value = panzoom(scene.value, {
-    zoomDoubleClickSpeed: 1.4,
-    maxZoom: 5,
-    minZoom: 0.1,
-    initialX: 0,
-    initialZoom: 1,
-    bounds: false,
-  });
-})
-
-const reset = () => {
-    const xys = panzoomInstance.value.getTransform()
-    const fixeX = 0
-    const fixeY = 0
-    if(xys.scale !== 1) { // calculate the point that should not move
-        const fScale = 1 - xys.scale
-        const fixeX = xys.x / fScale
-        const fixeY = xys.y / fScale
-        panzoomInstance.value.smoothZoomAbs(fixeX, fixeY, 1)
-    } else { 
-        panzoomInstance.value.smoothMoveTo(fixeX, fixeY, 1)
-    }
-};
-
-const getRoot = () => {
-  return treeData.value.find((item) => item.parentId === "" || !item.parentId);
-};
-
-const getRootId = () => {
-  return getRoot().id;
-};
 
 </script>
