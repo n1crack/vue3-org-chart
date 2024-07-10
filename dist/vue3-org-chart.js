@@ -1,4 +1,4 @@
-import { ref as h, inject as N, reactive as b, onMounted as B, resolveComponent as D, openBlock as d, createElementBlock as m, renderSlot as y, createElementVNode as k, unref as _, createCommentVNode as T, withKeys as X, withModifiers as Y, createVNode as Z, Transition as A, withCtx as x, Fragment as H, renderList as M, createBlock as O, normalizeClass as P, provide as R, watch as E, createTextVNode as V } from "vue";
+import { ref as h, inject as N, reactive as b, onMounted as B, resolveComponent as D, openBlock as d, createElementBlock as m, renderSlot as y, createElementVNode as k, unref as _, createCommentVNode as T, withKeys as X, withModifiers as Y, createVNode as Z, Transition as A, withCtx as x, Fragment as H, renderList as M, createBlock as z, normalizeClass as P, provide as R, watch as E, createTextVNode as V } from "vue";
 import I from "panzoom";
 const K = { class: "vue3-org-chart-node" }, L = {
   key: 0,
@@ -17,7 +17,7 @@ const K = { class: "vue3-org-chart-node" }, L = {
   setup(t) {
     const r = t, o = h(null), { data: l } = N("content"), s = h(!1), i = N("api"), c = i.find(r.id), a = b(l.value.filter((v) => v.parentId === r.id));
     B(() => {
-      c.parentId || (i.$root.value = o.value, i.reset());
+      c.parentId || (i.$root.value = o.value, i.zoomReset());
     });
     const p = () => {
       a.length && (s.value = !s.value, i.goToHome(o.value));
@@ -48,7 +48,7 @@ const K = { class: "vue3-org-chart-node" }, L = {
         Z(A, { name: "nodeTransition" }, {
           default: x(() => [
             a.length && s.value ? (d(), m("div", J, [
-              (d(!0), m(H, null, M(a, (e, n) => (d(), O($, {
+              (d(!0), m(H, null, M(a, (e, n) => (d(), z($, {
                 key: e.id,
                 id: e.id,
                 ref_for: !0,
@@ -128,8 +128,8 @@ function U(t, r, o) {
       t.value.smoothMoveTo(n, f);
   }
   function v(e) {
-    const n = o.value.getBoundingClientRect(), f = e.getBoundingClientRect(), g = n.x + n.width / 2 + s.x, C = n.y + s.y, w = f.x + f.width / 2, S = f.y, j = g - w, z = C - S;
-    t.value.moveBy(j, z, !0);
+    const n = o.value.getBoundingClientRect(), f = e.getBoundingClientRect(), g = n.x + n.width / 2 + s.x, C = n.y + s.y, w = f.x + f.width / 2, O = f.y, S = g - w, j = C - O;
+    t.value.moveBy(S, j, !0);
   }
   function u() {
     const e = t.value.getTransform(), n = o.value.getBoundingClientRect();
@@ -184,7 +184,7 @@ const W = { class: "vue3-org-chart" }, ee = { key: 1 }, te = { key: 0 }, oe = { 
           ref: s,
           class: "vue3-org-chart-scene"
         }, [
-          _(c).length ? (d(), O(q, {
+          _(c).length ? (d(), z(q, {
             id: _(p).rootId(),
             key: "root"
           }, {

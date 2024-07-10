@@ -57,7 +57,7 @@ onMounted(() => {
 
   if (!item.parentId) {
     api.$root.value = element.value;
-    api.reset();
+    api.zoomReset();
   }
 });
 
