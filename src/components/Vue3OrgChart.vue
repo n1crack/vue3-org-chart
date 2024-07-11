@@ -36,11 +36,9 @@ const props = defineProps({
   }
 });
 
-// Panzoom setup
+// Panzoom setup, provide it to the child components
 import {usePanzoom} from "../composables/usePanzoom.js";
-
 const {instance, scene, container} = usePanzoom();
-// provide useful functions to the child components
 provide('panzoom', {instance, scene, container});
 
 // Data setup, provide data and loading state to the child components
@@ -57,7 +55,7 @@ provide('api', api);
 const emit = defineEmits(['onReady']);
 watch(() => loading.value, (loadingState) => {
   if (!loadingState) {
-    emit('onReady', { api})
+    emit('onReady', {api})
   }
 });
 
