@@ -1,4 +1,4 @@
-import {onMounted, reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 
 export function useApi(panzoomInstance, data, container, scene) {
     // root node element
