@@ -50,7 +50,7 @@ provide('content', {data, loading});
 
 // Api setup, useful functions to interact with the org chart
 import {useApi} from "../composables/useApi.js";
-const api = useApi(instance, data, container);
+const api = useApi(instance, data, container, scene);
 provide('api', api);
 
 //  emit event when data is loaded and ready, provide api object

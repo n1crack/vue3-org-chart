@@ -1,6 +1,6 @@
 import {onMounted, reactive, ref} from "vue";
 
-export function useApi(panzoomInstance, data, container) {
+export function useApi(panzoomInstance, data, container, scene) {
     // root node element
     const $root = ref(null);
     const homePosition = reactive({x: 0, y: 40})
@@ -37,9 +37,19 @@ export function useApi(panzoomInstance, data, container) {
         }
     }
 
-    // center the node in the container
+    function sceneCurrentPos(){
+        const xys = panzoomInstance.value.getTransform();
+        const rect = container.value.getBoundingClientRect();
+        const sceneRect = scene.value.getBoundingClientRect();
+
+        const posX = sceneRect.x - rect.x;
+        const posY = sceneRect.y- rect.y;
+        const x = posX + sceneRect.width / 2;
+        const y = posY + sceneRect.height / 2;
+        return {x, y, scale: xys.scale};
+    }
+
     function goToHome(element) {
-        // get canvas rectangle with absolute position of element
         const rect = container.value.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
         const containerCenterX = rect.x + rect.width / 2 + homePosition.x;
@@ -55,17 +65,16 @@ export function useApi(panzoomInstance, data, container) {
     }
 
     function zoomIn() {
-        const xys = panzoomInstance.value.getTransform();
-        const rect = container.value.getBoundingClientRect();
-        panzoomInstance.value.zoomTo(rect.width / 2, xys.y, 2/3)
+      const { x, y, scale } = sceneCurrentPos();
+
+      panzoomInstance.value.smoothZoomAbs(x, y, (scale * 3) / 2);
     }
 
     function zoomOut() {
-        const xys = panzoomInstance.value.getTransform();
-        const rect = container.value.getBoundingClientRect();
-        panzoomInstance.value.zoomTo(rect.width / 2, xys.y, 3/2)
-    }
+      const { x, y, scale } = sceneCurrentPos();
 
+      panzoomInstance.value.smoothZoomAbs(x, y, (scale * 2) / 3);
+    }
 
     return {
         zoomReset,
