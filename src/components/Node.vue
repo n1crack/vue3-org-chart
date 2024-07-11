@@ -4,22 +4,22 @@
     <div class="vue3-org-chart-node-element" ref="element">
       <div v-if="item.parentId" class="vue3-org-chart-node-element-top-line"></div>
       <div tabindex="0" @keydown.self.space.prevent="api.goToHome(element)">
-        <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
+        <slot name="node" :item="item" :children="children" :show="show" :toggleChildren="toggleChildren"/>
       </div>
-      <div v-if="nodes.length && show" class="vue3-org-chart-node-element-bottom-line"></div>
+      <div v-if="children.length && show" class="vue3-org-chart-node-element-bottom-line"></div>
     </div>
 
     <Transition name="nodeTransition">
-      <div class="vue3-org-chart-node-container" v-if="nodes.length && show">
-        <Node v-for="(node, index) in nodes" :key="node.id" :id="node.id" ref="nodeRefs">
+      <div class="vue3-org-chart-node-container" v-if="children.length && show">
+        <Node v-for="(node, index) in children" :key="node.id" :id="node.id" ref="nodeRefs">
           <template #top-border>
             <div class="vue3-org-chart-node-element-horizontal-line" :class="{
               'left' : show && index !== 0,
-              'right' : show && index !== nodes.length - 1,
+              'right' : show && index !== children.length - 1,
             }"></div>
           </template>
-          <template #node="{item, nodes, show, toggleChildren}">
-            <slot name="node" :item="item" :nodes="nodes" :show="show" :toggleChildren="toggleChildren"/>
+          <template #node="{item, children, show, toggleChildren}">
+            <slot name="node" :item="item" :children="children" :show="show" :toggleChildren="toggleChildren"/>
           </template>
         </Node>
       </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import {ref, reactive, inject, onMounted} from 'vue';
+import {ref, inject, onMounted} from 'vue';
 
 // props
 const props = defineProps({
@@ -38,19 +38,15 @@ const props = defineProps({
 // element reference
 const element = ref(null);
 
-// content data
-const { data } = inject('content');
-
-// show/hide children nodes
+// show/hide children children
 const show = ref(false);
 
-// panzoom instance
-// const {instance, container} = inject('panzoom');
+// api instance
 const api = inject('api');
 
-// get item and children nodes
+// get item and children children
 const item = api.find(props.id);
-const nodes = api.findChildren(props.id);
+const children = api.findChildren(props.id);
 
 onMounted(() => {
   if (!item.parentId) {
@@ -59,9 +55,9 @@ onMounted(() => {
   }
 });
 
-// toggle visibility of children nodes
+// toggle visibility of children children
 const toggleChildren = () => {
-  if (!nodes.length) return;
+  if (!children.length) return;
   show.value = !show.value;
   api.goToHome(element.value);
 };

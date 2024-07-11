@@ -8,18 +8,18 @@
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @on-ready="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
-        <template #node="{item, nodes, show, toggleChildren}">
+        <template #node="{item, children, show, toggleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
                 <img v-if="item.imageUrl" class="avatar" :src="item.imageUrl" alt="avatar">
             </div>
                 <div>
-                    <div>{{ item.id }} ({{ nodes.length }})</div>
+                    <div>{{ item.id }} ({{ children.length }})</div>
                     <div>{{ item.name }}</div>
                 </div>
             </div>
             <div style="text-align: center;">
-                <button class="node-btn-toggle" v-if="nodes.length" @click="toggleChildren" @touchend="toggleChildren">
+                <button class="node-btn-toggle" v-if="children.length" @click="toggleChildren" @touchend="toggleChildren">
                     {{ show ? '-' : '+' }}
                 </button>
             </div>
