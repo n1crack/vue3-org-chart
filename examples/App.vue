@@ -5,6 +5,8 @@
     <button @click="vocApi.zoomReset">Reset Zoom</button>
     <button @click="vocApi.zoomIn">Zoom In</button>
     <button @click="vocApi.zoomOut">Zoom Out</button>
+    <button @click="vocApi.expandAll">Expand All</button>
+    <button @click="vocApi.collapseAll">Collapse All</button>
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @on-ready="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">

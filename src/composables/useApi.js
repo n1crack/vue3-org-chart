@@ -80,10 +80,24 @@ export function useApi(panzoomInstance, data, container, scene) {
       panzoomInstance.value.smoothZoomAbs(x, y, (scale * 2) / 3);
     }
 
+    function collapseAll() {
+        data.forEach((item) => {
+            item.__show = false;
+        });
+    }
+
+    function expandAll() {
+        data.forEach((item) => {
+            item.__show = true;
+        });
+    }
+
     return {
         zoomReset,
         zoomIn,
         zoomOut,
+        expandAll,
+        collapseAll,
         $root,
         root,
         rootId,
