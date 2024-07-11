@@ -7,7 +7,7 @@
     <button @click="vocApi.zoomOut">Zoom Out</button>
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
-      <vue3-org-chart @onReady="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
+      <vue3-org-chart @on-ready="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
         <template #node="{item, nodes, show, toggleChildren}">
             <div class="node-item" :class="{'active': show, 'passive' : !show }">
             <div>
@@ -46,8 +46,8 @@ const vocApi = ref(null);
 // this function will be called when vue3-org-chart is ready
 // it will pass api object as argument
 // api object contains reset function and some other functions will be added in future
-const initVue3OrgChart = ({api}) => {
-     vocApi.value = api;
+const initVue3OrgChart = (api) => {
+    vocApi.value = api;
 }
 
 </script>

@@ -1,11 +1,11 @@
-import {onMounted, ref} from "vue";
+import {onMounted, ref, reactive} from "vue";
 
 export function useData({initialData, json}) {
     // loading state
     const loading = ref(true);
 
     // fetched items
-    const data = ref(initialData);
+    const data = reactive(initialData);
 
     const fetchJsonData = async (url) => {
         const response = await fetch(url);
@@ -14,7 +14,7 @@ export function useData({initialData, json}) {
 
     onMounted(async () => {
         if (json) {
-            data.value = await fetchJsonData(json);
+            Object.assign(data, await fetchJsonData(json))
         }
         loading.value = false;
     });

@@ -44,17 +44,15 @@ const { data } = inject('content');
 // show/hide children nodes
 const show = ref(false);
 
-
 // panzoom instance
 // const {instance, container} = inject('panzoom');
 const api = inject('api');
 
 // get item and children nodes
 const item = api.find(props.id);
-const nodes = reactive(data.value.filter((item) => item.parentId === props.id));
+const nodes = api.findChildren(props.id);
 
 onMounted(() => {
-
   if (!item.parentId) {
     api.$root.value = element.value;
     api.zoomReset();

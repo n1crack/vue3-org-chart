@@ -7,12 +7,16 @@ export function useApi(panzoomInstance, data, container, scene) {
 
     // find item by id
     function find(id) {
-        return data.value.find((item) => item.id === id);
+        return data.find((item) => item.id === id);
+    }
+
+    function findChildren(id){
+        return data.filter((item) => item.parentId === id);
     }
 
     // get the root item
     function root() {
-        return data.value.find((item) => item.parentId === "" || !item.parentId);
+        return data.find((item) => item.parentId === "" || !item.parentId);
     }
 
     // get the root id
@@ -84,6 +88,7 @@ export function useApi(panzoomInstance, data, container, scene) {
         root,
         rootId,
         find,
+        findChildren,
         goToHome
     }
 }
