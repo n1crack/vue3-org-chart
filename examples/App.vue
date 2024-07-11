@@ -46,7 +46,7 @@ const vocApi = ref(null);
 // this function will be called when vue3-org-chart is ready
 // it will pass api object as argument
 // api object contains reset function and some other functions will be added in future
-const initVue3OrgChart = (api) => {
+const initVue3OrgChart = ({api}) => {
     vocApi.value = api;
 }
 
