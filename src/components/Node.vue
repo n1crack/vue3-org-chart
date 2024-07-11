@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import {ref, inject, onMounted} from 'vue';
+import {ref, inject, onMounted, computed} from 'vue';
 
 // props
 const props = defineProps({
@@ -39,7 +39,7 @@ const props = defineProps({
 const element = ref(null);
 
 // show/hide children children
-const show = ref(false);
+const show = computed(() => item.__show || false);
 
 // api instance
 const api = inject('api');
@@ -57,9 +57,11 @@ onMounted(() => {
 
 // toggle visibility of children children
 const toggleChildren = () => {
-  if (!children.length) return;
-  show.value = !show.value;
-  api.goToHome(element.value);
+    if (!children.length) {
+        return
+    };
+    item.__show = !show.value;
+    api.goToHome(element.value);
 };
 
 </script>
