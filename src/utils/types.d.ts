@@ -19,11 +19,15 @@ export interface IDataSetup {
 }
 
 export interface IApi {
+    zoomReset: () => void,
+    zoomIn: () => void,
+    zoomOut: () => void,
+    expandAll: () => void,
+    collapseAll: () => void,
     $root: Ref<HTMLElement | null>,
-    find: (id: string) => INode,
-    findChildren: (id: string) => IData,
     root: () => INode,
     rootId: () => string,
-    zoomReset: () => void,
+    find: (id: string) => INode,
+    findChildren: (id: string) => IData,
     goToHome: (element: HTMLElement|null) => void,
 }

@@ -18,8 +18,8 @@
               'right' : open && index !== children.length - 1,
             }"></div>
           </template>
-          <template #node="{item, children, open, toggleChildren}">
-            <slot name="node" :item="item" :children="children" :open="open" :toggleChildren="toggleChildren"/>
+          <template #node="params: {item:INode, children: IData, open: boolean, toggleChildren: () => void}">
+            <slot name="node" v-bind="params"/>
           </template>
         </Node>
       </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IApi, INode } from '@/utils/types';
+import type { IApi, IData, INode } from '@/utils/types';
 import {ref, inject, onMounted, computed} from 'vue';
 
 // props
@@ -47,7 +47,6 @@ const item: INode = api.find(props.id);
 
 // open/close children children
 const open = computed(() => item.__open || false);
-
 
 const children = api.findChildren(props.id);
 

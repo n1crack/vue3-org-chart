@@ -102,13 +102,13 @@ export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Re
 
     function collapseAll() {
         data.forEach((node: INode) => {
-            node.__hidden = false;
+            node.__open = false;
         });
     }
 
     function expandAll() {
         data.forEach((node: INode) => {
-            node.__hidden = true;
+            node.__open = true;
         });
     }
 

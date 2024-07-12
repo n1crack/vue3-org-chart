@@ -41,7 +41,7 @@ const {data, loading} = useData({initialData: props.data, json: props.json});
 provide('content', {data, loading});
 
 // Api setup, useful functions to interact with the org chart
-import {useApi} from "../composables/useApi";
+import { useApi } from "../composables/useApi";
 const api: IApi = useApi(instance, data, container, scene);
 provide('api', api);
 
