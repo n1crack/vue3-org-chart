@@ -1,7 +1,7 @@
 {
   "name": "vue3-org-chart",
   "version": "0.1.0",
-  "description": ".",
+  "description": "Vue3 Org Chart is a tree diagram that visualizes the structure of an organization and the relationships and relatives. It is a Vue 3 component.",
   "type": "module",
   "files": [
     "dist"
