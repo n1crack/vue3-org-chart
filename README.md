@@ -51,10 +51,10 @@ for more detailed example, please check the [examples](examples) folder
 ```vue 
 <div>
     <vue3-org-chart json="YOUR_DATA_JSON_URL">
-        <template #node="{node, children, hidden, toggleChildren}">
+        <template #node="{node, children, open, toggleChildren}">
             <!-- Node Element / TEMPLATE START -->
             <div>{{node.name}}</div>
-            <button v-if="children.length" @click="toggleChildren"> {{ hidden ? '+' : '-' }}</button>
+            <button v-if="children.length" @click="toggleChildren"> {{ open ? '-' : '+' }}</button>
             <!-- Node Element / TEMPLATE END -->
         </template>
     </vue3-org-chart>

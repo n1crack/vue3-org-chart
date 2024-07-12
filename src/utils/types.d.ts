@@ -8,7 +8,7 @@ export interface IProps {
 export interface INode {
     id: string
     parentId?: string,
-    __show?: boolean
+    __open?: boolean
 }
 
 export type IData = Array<INode>;

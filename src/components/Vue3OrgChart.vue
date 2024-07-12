@@ -3,8 +3,8 @@
     <div ref="container" class="vue3-org-chart-container">
       <div ref="scene" class="vue3-org-chart-scene">
         <Node v-if="data.length && api.rootId()" :id="api.rootId()" key="root">
-          <template #node="{item, children, show, toggleChildren}">
-            <slot name="node" :item="item" :children="children" :show="show" :toggleChildren="toggleChildren"/>
+          <template #node="{item, children, open, toggleChildren}">
+            <slot name="node" :item="item" :children="children" :open="open" :toggleChildren="toggleChildren"/>
           </template>
         </Node>
         <div v-else>
