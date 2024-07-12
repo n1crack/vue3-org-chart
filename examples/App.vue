@@ -10,8 +10,8 @@
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @on-ready="initVue3OrgChart" json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
-        <template #node="{item, children, show, toggleChildren}">
-            <div class="node-item" :class="{'active': show, 'passive' : !show }">
+        <template #node="{item, children, open, toggleChildren}">
+            <div class="node-item" :class="{'active': open, 'passive' : !open }">
             <div>
                 <img v-if="item.imageUrl" class="avatar" :src="item.imageUrl" alt="avatar">
             </div>
@@ -22,7 +22,7 @@
             </div>
             <div style="text-align: center;">
                 <button class="node-btn-toggle" v-if="children.length" @click="toggleChildren" @touchend="toggleChildren">
-                    {{ show ? '-' : '+' }}
+                    {{ open ? '-' : '+' }}
                 </button>
             </div>
         </template>
@@ -39,7 +39,7 @@
 
 <script setup>
 import {ref} from "vue";
-// alternative way to import, it is already imported in main.js
+// alternative way to import, it is already imported in main.ts
 // import {Vue3OrgChart} from "../dist/vue3-org-chart.js";
 // import "../dist/style.css";
 

@@ -1,27 +1,39 @@
+import type { IData, INode } from "@/utils/types";
+import type { PanZoom } from "panzoom";
 import {reactive, ref} from "vue";
+import type { Ref } from 'vue'
 
-export function useApi(panzoomInstance, data, container, scene) {
+
+export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Ref<HTMLElement|null>, scene: Ref<HTMLElement|null>) {
     // root node element
-    const $root = ref(null);
+    const $root = ref<HTMLElement | null>(null);
     const homePosition = reactive({x: 0, y: 40})
 
-    // find item by id
-    function find(id) {
-        return data.find((item) => item.id === id);
+    // find node by id
+    function find(id: string) {
+        const node = data.find((node : INode) => node.id === id);
+        if (!node) {
+            throw new Error(`Node with id ${id} not found`);
+        }
+        return node;
     }
 
-    function findChildren(id){
-        return data.filter((item) => item.parentId === id);
+    function findChildren(id: string){
+        return data.filter((node: INode) => node.parentId === id);
     }
 
-    // get the root item
+    // get the root node
     function root() {
-        return data.find((item) => item.parentId === "" || !item.parentId);
+        const root = data.find((node: INode) => node.parentId === "" || !node.parentId);
+        if (!root) {
+            throw new Error(`Root node not found`);
+        }
+        return root;
     }
 
     // get the root id
     function rootId() {
-        return root().id;
+        return root()?.id;
     }
 
     // resets the panzoomInstance position 0,0 and scale 1
@@ -43,18 +55,26 @@ export function useApi(panzoomInstance, data, container, scene) {
 
     function sceneCurrentPos(){
         const xys = panzoomInstance.value.getTransform();
-        const rect = container.value.getBoundingClientRect();
-        const sceneRect = scene.value.getBoundingClientRect();
+        const rect = container.value?.getBoundingClientRect();
+        const sceneRect = scene.value?.getBoundingClientRect();
+
+        if (!rect || !sceneRect) {
+            return {...homePosition, scale: 1};
+        };
 
         const posX = sceneRect.x - rect.x;
         const posY = sceneRect.y- rect.y;
         const x = posX + sceneRect.width / 2;
         const y = posY + sceneRect.height / 2;
+        
         return {x, y, scale: xys.scale};
     }
 
-    function goToHome(element) {
-        const rect = container.value.getBoundingClientRect();
+    function goToHome(element: HTMLElement|null) {
+        const rect = container.value?.getBoundingClientRect();
+        if (!rect || !element) {
+            return
+        };
         const elementRect = element.getBoundingClientRect();
         const containerCenterX = rect.x + rect.width / 2 + homePosition.x;
         const containerCenterY = rect.y + homePosition.y;
@@ -81,14 +101,14 @@ export function useApi(panzoomInstance, data, container, scene) {
     }
 
     function collapseAll() {
-        data.forEach((item) => {
-            item.__show = false;
+        data.forEach((node: INode) => {
+            node.__open = false;
         });
     }
 
     function expandAll() {
-        data.forEach((item) => {
-            item.__show = true;
+        data.forEach((node: INode) => {
+            node.__open = true;
         });
     }
 
