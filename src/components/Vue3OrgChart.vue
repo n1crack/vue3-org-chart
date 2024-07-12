@@ -23,7 +23,6 @@
 <script setup lang="ts">
 import type { IApi, IProps } from "@/utils/types";
 import {provide, watch} from 'vue';
-import type { Ref } from 'vue'
 import Node from './Node.vue';
 
 // props
