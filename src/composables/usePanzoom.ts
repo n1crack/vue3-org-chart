@@ -1,14 +1,17 @@
-import {onMounted, provide, ref} from "vue";
+import {onMounted, ref} from "vue";
 import panzoom from "panzoom";
 
 export function usePanzoom() {
     // panzoom instance
     const instance = ref();
-    const scene = ref(null);
-    const container = ref(null);
+    const scene = ref<HTMLElement | null>(null);
+    const container = ref<HTMLElement | null>(null);
 
     // set panzoom instance
     function setInstance() {
+        if (!scene.value) {
+            return;
+        }
         instance.value = panzoom(scene.value, {
             zoomDoubleClickSpeed: 1.4,
             maxZoom: 5,

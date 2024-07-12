@@ -9,7 +9,7 @@ export default defineConfig({
 
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/index.js'),
+            entry: resolve(__dirname, 'src/index.ts'),
             formats: ['es', 'cjs'],
             name: 'Vue3 Org Chart',
             // the proper extensions will be added

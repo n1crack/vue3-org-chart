@@ -27,31 +27,39 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { IApi, INode } from '@/utils/types';
 import {ref, inject, onMounted, computed} from 'vue';
 
 // props
 const props = defineProps({
-  id: String,
+  id: {type: String, required: true},
 });
 
 // element reference
 const element = ref(null);
 
+// api instance
+const api = inject('api') as IApi;
+
+// get item and children children
+const item: INode = api.find(props.id);
+
 // show/hide children children
 const show = computed(() => item.__show || false);
 
-// api instance
-const api = inject('api');
 
-// get item and children children
-const item = api.find(props.id);
 const children = api.findChildren(props.id);
 
 onMounted(() => {
   if (!item.parentId) {
     api.$root.value = element.value;
     api.zoomReset();
+
+    item.__show = true; // root is showing children
+    // children.forEach((item) => {  /
+    //   item.__show = true;
+    // });
   }
 });
 
