@@ -1,7 +1,7 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 // import { Vue3OrgChartPlugin } from '../dist/vue3-org-chart.js'
-import { Vue3OrgChartPlugin } from '../src'
+import {Vue3OrgChartPlugin} from '../src'
 import '../dist/style.css';
 
 const app = createApp(App);

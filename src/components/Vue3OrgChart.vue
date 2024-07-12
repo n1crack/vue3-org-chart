@@ -11,7 +11,7 @@
             <span v-if="loading">
               <slot name="loading">Loading...</slot>
             </span>
-            <span v-else>
+          <span v-else>
               <slot name="no-data">No data</slot>
             </span>
         </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IApi, IProps } from "@/utils/types";
+import type {IApi, IProps} from "@/utils/types";
 import {provide, watch} from 'vue';
 import Node from './Node.vue';
 
@@ -31,17 +31,20 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 // Panzoom setup, provide it to the child components
-import {usePanzoom} from "../composables/usePanzoom";
+import {usePanzoom} from "@/composables/usePanzoom";
+
 const {instance, scene, container} = usePanzoom();
 provide('panzoom', {instance, scene, container});
 
 // Data setup, provide data and loading state to the child components
-import {useData} from "../composables/useData";
+import {useData} from "@/composables/useData";
+
 const {data, loading} = useData({initialData: props.data, json: props.json});
 provide('content', {data, loading});
 
 // Api setup, useful functions to interact with the org chart
-import { useApi } from "../composables/useApi";
+import {useApi} from "@/composables/useApi";
+
 const api: IApi = useApi(instance, data, container, scene);
 provide('api', api);
 

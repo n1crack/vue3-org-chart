@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IApi, IData, INode } from '@/utils/types';
+import type {IApi, IData, INode} from '@/utils/types';
 import {ref, inject, onMounted, computed} from 'vue';
 
 // props
@@ -64,11 +64,12 @@ onMounted(() => {
 
 // toggle visibility of children children
 const toggleChildren = () => {
-    if (!children.length) {
-        return
-    };
-    item.__open = !open.value;
-    api.goToHome(element.value);
+  if (!children.length) {
+    return
+  }
+
+  item.__open = !open.value;
+  api.goToHome(element.value);
 };
 
 </script>
