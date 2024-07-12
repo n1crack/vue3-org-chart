@@ -1,9 +1,9 @@
-import type { Ref } from "vue";
+import type {Ref} from "vue";
 
 export interface IProps {
     data?: IData,
     json?: string
-  }
+}
 
 export interface INode {
     id: string
@@ -29,5 +29,12 @@ export interface IApi {
     rootId: () => string,
     find: (id: string) => INode,
     findChildren: (id: string) => IData,
-    goToHome: (element: HTMLElement|null) => void,
+    goToHome: (element: HTMLElement | null) => void,
+}
+
+export interface INodeScopeParams {
+    item: INode,
+    children: IData,
+    open: boolean,
+    toggleChildren: () => void
 }
