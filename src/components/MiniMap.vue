@@ -4,6 +4,16 @@ import type {IPanzoom} from "@/utils/types";
 
 const {instance, scene, container} = inject('panzoom') as IPanzoom;
 
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 1 / 6
+  }
+})
+
+const miniMapMaxWidth = computed(() => containerRect.value.width * props.size);
+const miniMapMaxHeight = computed(() => containerRect.value.height * props.size);
+
 const containerRect = ref({
   width: 0,
   height: 0,
@@ -74,15 +84,12 @@ onMounted(() => {
   }
 });
 
-const miniMapMaxWidth = ref(200);
-const miniMapMaxHeight = ref(200);
-
 const maxBoundaries = computed(() => {
   return {
     left: containerRect.value.left - sceneRect.value.left + containerRect.value.width,
     right: sceneRect.value.left - containerRect.value.left + sceneRect.value.width,
-    top: sceneRect.value.top - containerRect.value.top,
-    bottom: containerRect.value.height - sceneRect.value.top + sceneRect.value.height
+    top: containerRect.value.top - sceneRect.value.top + containerRect.value.height,
+    bottom: sceneRect.value.top - containerRect.value.top + sceneRect.value.height,
   };
 });
 
@@ -117,7 +124,7 @@ const minimapScene = computed(() => ({
   width: scale(sceneRect.value.width),
   height: scale(sceneRect.value.height),
   left: Math.max(Math.min(sceneRectPos().x, miniMapMaxWidth.value - scale(sceneRect.value.width)), 0),
-  top: Math.max(Math.min(sceneRectPos().y, miniMapMaxWidth.value - scale(sceneRect.value.height)), 0)
+  top: Math.max(Math.min(sceneRectPos().y, miniMapMaxHeight.value - scale(sceneRect.value.height)), 0)
 }));
 
 </script>
@@ -128,8 +135,8 @@ const minimapScene = computed(() => ({
         width: miniMapMaxWidth + 'px',
         height: miniMapMaxHeight + 'px',
       }"
-      style="position:absolute; padding: 5px; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none; ">
-    <div style="position: relative">
+      style="position:absolute; padding: 0; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none;">
+    <div>
       <div
           style="position:absolute;background-color: rgba(255,255,255,0.40);border: 1px solid #495db9; pointer-events: none;"
           :style="{

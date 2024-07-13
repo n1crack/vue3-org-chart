@@ -57,6 +57,6 @@ watch(() => loading.value, (loadingState) => {
         </div>
       </div>
     </div>
-    <MiniMap></MiniMap>
+    <MiniMap />
   </div>
 </template>
