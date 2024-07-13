@@ -66,22 +66,19 @@ const updateImmediately = () => {
 
 const update = debounce(updateImmediately, 500);
 
-watch(() => instance.value, () => {
-  if (!instance.value) {
-    return;
-  }
-  instance.value.on('transform', () => updateImmediately());
-});
-
 onMounted(() => {
-  update();
+  updateImmediately();
+
+  instance.value.on('transform', () => updateImmediately());
 
   if (container.value) {
     new ResizeObserver(update).observe(container.value);
   }
+
   if (scene.value) {
     new ResizeObserver(update).observe(scene.value);
   }
+
 });
 
 const maxBoundaries = computed(() => {
@@ -136,27 +133,27 @@ const minimapScene = computed(() => ({
         height: miniMapMaxHeight + 'px',
       }"
       style="position:absolute; padding: 0; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none;">
-    <div>
-      <div
-          style="position:absolute;background-color: rgba(255,255,255,0.40);border: 1px solid #495db9; pointer-events: none;"
-          :style="{
-            height: miniMapContainer.height+'px',
-            width: miniMapContainer.width+'px',
-            top: miniMapContainer.top + 'px',
-            left: miniMapContainer.left + 'px',
-          }"
-      >
-      </div>
 
-      <div
-          style="position:absolute;background-color: rgba(255,255,255,0.75);border: 1px solid #d74848; pointer-events: none;"
-          :style="{
+
+    <div
+        style="position:absolute;background-color: rgba(255,255,255,0.30);border: 1px solid #ff8c8c; pointer-events: none;"
+        :style="{
             height: minimapScene.height + 'px',
             width: minimapScene.width + 'px',
             top: minimapScene.top + 'px',
             left: minimapScene.left + 'px',
           }"
-      ></div>
+    ></div>
+
+    <div
+        style="position:absolute;background-color: rgba(255,255,255,0.30);border: 1px solid #8ee5f8; pointer-events: none;"
+        :style="{
+            height: miniMapContainer.height+'px',
+            width: miniMapContainer.width+'px',
+            top: miniMapContainer.top + 'px',
+            left: miniMapContainer.left + 'px',
+          }"
+    >
     </div>
   </div>
 </template>

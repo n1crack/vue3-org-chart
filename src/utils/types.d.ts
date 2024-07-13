@@ -3,7 +3,8 @@ import type {PanZoom} from "panzoom";
 
 export interface IProps {
     data?: IData,
-    json?: string
+    json?: string,
+    minimap?: boolean,
 }
 
 export interface INode {
@@ -22,7 +23,7 @@ export interface IDataSetup {
 export interface IPanzoom {
     container: Ref<HTMLElement | null>;
     instance: Ref<PanZoom>;
-    scene: Ref<HTMLElement | null>
+    scene: Ref<HTMLElement | null>,
 }
 
 export interface IApi {
@@ -37,6 +38,10 @@ export interface IApi {
     find: (id: string) => INode,
     findChildren: (id: string) => IData,
     goToHome: (element: HTMLElement | null) => void,
+    minimap: {
+        state: Ref<boolean>,
+        toggle: () => void
+    }
 }
 
 export interface INodeScopeParams {

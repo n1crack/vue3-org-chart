@@ -5,7 +5,8 @@ import Node from './Node.vue';
 
 // props
 const props = withDefaults(defineProps<IProps>(), {
-  data: () => []
+  data: () => [],
+  minimap: false
 })
 
 // Panzoom setup, provide it to the child components
@@ -23,9 +24,8 @@ provide('content', {data, loading});
 // Api setup, useful functions to interact with the org chart
 import {useApi} from "@/composables/useApi";
 import MiniMap from "@/components/MiniMap.vue";
-import type {PanZoom} from "panzoom";
 
-const api: IApi = useApi(instance, data, container, scene);
+const api: IApi = useApi(instance, data, container, scene, props.minimap);
 provide('api', api);
 
 //  emit event when data is loaded and ready, provide api object
@@ -57,6 +57,6 @@ watch(() => loading.value, (loadingState) => {
         </div>
       </div>
     </div>
-    <MiniMap />
+    <MiniMap v-if="api.minimap.state" />
   </div>
 </template>

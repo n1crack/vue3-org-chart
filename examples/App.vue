@@ -7,6 +7,7 @@
     <button @click="vocApi.zoomOut">Zoom Out</button>
     <button @click="vocApi.expandAll">Expand All</button>
     <button @click="vocApi.collapseAll">Collapse All</button>
+    <button @click="vocApi.minimap.toggle">Toggle Minimap</button>
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
       <vue3-org-chart @on-ready="initVue3OrgChart"

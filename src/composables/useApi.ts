@@ -4,10 +4,17 @@ import {reactive, ref} from "vue";
 import type { Ref } from 'vue'
 
 
-export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Ref<HTMLElement|null>, scene: Ref<HTMLElement|null>) {
+export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Ref<HTMLElement|null>, scene: Ref<HTMLElement|null>, prop_minimap: boolean) {
     // root node element
     const $root = ref<HTMLElement | null>(null);
     const homePosition = reactive({x: 0, y: 40});
+
+    const minimap = reactive({
+        state: prop_minimap,
+        toggle: () => {
+            minimap.state = !minimap.state;
+        }
+    })
 
     // find node by id
     function find(id: string) {
@@ -123,6 +130,7 @@ export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Re
         rootId,
         find,
         findChildren,
-        goToHome
+        goToHome,
+        minimap,
     }
 }
