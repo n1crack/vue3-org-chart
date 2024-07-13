@@ -38,7 +38,7 @@ const updateRectangles = () => {
   sceneRect.value = scene.value.firstChild.getBoundingClientRect();
 };
 
-const updateRectanglesDebounced = debounce(updateRectangles, 500);
+const updateRectanglesDebounced = debounce(updateRectangles, 350);
 
 // Set up event listeners and observers on mount
 onMounted(() => {
