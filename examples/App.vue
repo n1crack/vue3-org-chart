@@ -10,7 +10,8 @@
     <button @click="vocApi.minimap.toggle">Toggle Minimap</button>
 
     <div style="border: 1px solid #e8e8e8; background: white; border-radius: 8px; min-height: 70vh">
-      <vue3-org-chart @on-ready="initVue3OrgChart"
+      <vue3-org-chart minimap
+                      @on-ready="initVue3OrgChart"
                       json="https://raw.githubusercontent.com/bumbeishvili/sample-data/main/sample.json">
         <template #node="{item, children, open, toggleChildren}">
           <div class="node-item" :class="{'active': open, 'passive' : !open }">

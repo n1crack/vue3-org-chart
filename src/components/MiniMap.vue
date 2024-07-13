@@ -97,31 +97,24 @@ const scale = (value: number) => {
   return value * Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
 };
 
-const sceneRectPos = () => {
-  let scale = Math.min(miniMapMaxWidth.value / sceneRect.value.width, miniMapMaxHeight.value / sceneRect.value.height);
-
-  if (sceneRect.value.width / containerRect.value.width <= 1) {
-    scale = scale * sceneRect.value.width / containerRect.value.width;
-  }
-
-  return {
-    x: (sceneRect.value.left - containerRect.value.left) * scale,
-    y: (sceneRect.value.top - containerRect.value.top) * scale
-  };
-};
-
 const miniMapContainer = computed(() => ({
   width: scale(containerRect.value.width),
   height: scale(containerRect.value.height),
-  left: Math.max(scale(containerRect.value.left) - scale(sceneRect.value.left), 0),
-  top: Math.max(scale(containerRect.value.top) - scale(sceneRect.value.top), 0),
+  left: Math.max(scale(containerRect.value.left - sceneRect.value.left), 0),
+  top: Math.max(scale(containerRect.value.top - sceneRect.value.top), 0),
 }));
 
 const minimapScene = computed(() => ({
   width: scale(sceneRect.value.width),
   height: scale(sceneRect.value.height),
-  left: Math.max(Math.min(sceneRectPos().x, miniMapMaxWidth.value - scale(sceneRect.value.width)), 0),
-  top: Math.max(Math.min(sceneRectPos().y, miniMapMaxHeight.value - scale(sceneRect.value.height)), 0)
+  left: Math.max(Math.min(
+      scale(sceneRect.value.left - containerRect.value.left),
+      miniMapMaxWidth.value - scale(sceneRect.value.width)
+  ), 0),
+  top: Math.max(Math.min(
+      scale(sceneRect.value.top - containerRect.value.top),
+      miniMapMaxHeight.value - scale(sceneRect.value.height)
+  ), 0)
 }));
 
 </script>

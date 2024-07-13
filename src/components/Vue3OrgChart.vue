@@ -57,6 +57,6 @@ watch(() => loading.value, (loadingState) => {
         </div>
       </div>
     </div>
-    <MiniMap v-if="api.minimap.state" />
+    <MiniMap v-if="!loading && api.minimap.state" />
   </div>
 </template>
