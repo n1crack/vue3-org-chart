@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, inject, onMounted, provide, ref, watch} from "vue";
+import {computed, inject, onMounted, provide, type Ref, ref, watch} from "vue";
 import type {IData} from "@/utils/types";
 
 const {instance, scene, container} = inject<{ instance: any, scene: any, container: any }>('panzoom');
@@ -22,7 +22,7 @@ const sceneRect = ref({
 function debounce(func: (...args: any[]) => void, wait: number): (...args: any[]) => void {
   let timeout: ReturnType<typeof setTimeout> | null;
 
-  return function(this: any, ...args: any[]): void {
+  return function (this: any, ...args: any[]): void {
     const context = this;
 
     clearTimeout(timeout as ReturnType<typeof setTimeout>);
@@ -70,7 +70,7 @@ onMounted(() => {
 const miniMapMaxWidth = ref(200);
 const miniMapMaxHeight = ref(200);
 
-const outboundSides = computed(() => {
+const outboundSides = () => {
   const leftSide = containerRect.value.left - sceneRect.value.left + containerRect.value.width;
   const rightSide = sceneRect.value.left - containerRect.value.left + sceneRect.value.width;
   const topSide = sceneRect.value.top - containerRect.value.top;
@@ -82,75 +82,45 @@ const outboundSides = computed(() => {
     top: topSide,
     bottom: bottomSide
   };
-});
+};
 
-const maxOutboundSide = computed(() => {
-  const maxWidth = Math.max(outboundSides.value.left, outboundSides.value.right, containerRect.value.width, sceneRect.value.width);
-  const maxHeight = Math.max(outboundSides.value.top, outboundSides.value.bottom, containerRect.value.height, sceneRect.value.height);
+const scale = (value: number) => {
+  const maxWidth = Math.max(outboundSides().left, outboundSides().right, containerRect.value.width, sceneRect.value.width);
+  const maxHeight = Math.max(outboundSides().top, outboundSides().bottom, containerRect.value.height, sceneRect.value.height);
 
-  return { maxWidth, maxHeight };
-});
+  return value * Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
+};
 
-const scaledRect = computed(() => {
-  const { maxWidth, maxHeight } = maxOutboundSide.value;
-
-  let scale = Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
-
-
-  return {
-    width: containerRect.value.width * scale ,
-    height: containerRect.value.height * scale,
-    top: containerRect.value.top * scale,
-    left: containerRect.value.left * scale,
-  };
-});
-
-const scaledScene = computed(() => {
-  const { maxWidth, maxHeight } = maxOutboundSide.value;
-
-  let scale = Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
-
-
-  return {
-    width: sceneRect.value.width * scale,
-    height: sceneRect.value.height * scale,
-    top: sceneRect.value.top * scale,
-    left: sceneRect.value.left * scale,
-  };
-});
-
-const diffCenter = computed(() => {
-  const centerX = containerRect.value.left ;
-  const centerY = containerRect.value.top  ;
-  const sceneCenterX = sceneRect.value.left  ;
-  const sceneCenterY = sceneRect.value.top  ;
+const diffCenter = () => {
+  const centerX = containerRect.value.left;
+  const centerY = containerRect.value.top;
+  const sceneCenterX = sceneRect.value.left;
+  const sceneCenterY = sceneRect.value.top;
   let scale = Math.min(miniMapMaxWidth.value / sceneRect.value.width, miniMapMaxHeight.value / sceneRect.value.height);
 
-
   if (sceneRect.value.width / containerRect.value.width <= 1) {
-    scale = scale * sceneRect.value.width / containerRect.value.width ;
+    scale = scale * sceneRect.value.width / containerRect.value.width;
   }
 
   return {
-    x: (+  sceneCenterX - centerX) * scale,
-    y: (+  sceneCenterY - centerY) * scale
+    x: (sceneCenterX - centerX) * scale,
+    y: (sceneCenterY - centerY) * scale
   };
-});
+};
 
-const resizedRect = computed(() =>({
-  width: scaledRect.value.width,
-  height: scaledRect.value.height,
-  top: Math.max(-scaledScene.value.top+ scaledRect.value.top, 0),
-  left: Math.max(-scaledScene.value.left + scaledRect.value.left, 0),
+const miniMapContainer = computed(() => ({
+  width: scale(containerRect.value.width),
+  height: scale(containerRect.value.height),
+  left: Math.max(scale(containerRect.value.left) - scale(sceneRect.value.left), 0),
+  top: Math.max(scale(containerRect.value.top) - scale(sceneRect.value.top), 0),
 }));
 
-const resizedScene = computed(() =>({
-  width: scaledScene.value.width,
-  height: scaledScene.value.height,
-  top: Math.max(Math.min(diffCenter.value.y, miniMapMaxWidth.value - scaledScene.value.height), 0),
-  left: Math.max(Math.min(diffCenter.value.x, miniMapMaxWidth.value - scaledScene.value.width), 0)
+const minimapScene = computed(() => ({
+  width: scale(sceneRect.value.width),
+  height: scale(sceneRect.value.height),
+  left: Math.max(Math.min(diffCenter().x, miniMapMaxWidth.value - scale(sceneRect.value.width)), 0),
+  top: Math.max(Math.min(diffCenter().y, miniMapMaxWidth.value - scale(sceneRect.value.height)), 0)
 }));
-
 
 </script>
 
@@ -163,25 +133,25 @@ const resizedScene = computed(() =>({
       style="position:absolute; padding: 5px; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none; ">
     <div style="position: relative">
       <div
-        style="position:absolute;background-color: rgba(255,255,255,0.40);border: 1px solid #495db9; pointer-events: none;"
+          style="position:absolute;background-color: rgba(255,255,255,0.40);border: 1px solid #495db9; pointer-events: none;"
           :style="{
-        height: resizedRect.height+'px',
-        width: resizedRect.width+'px',
-        top: resizedRect.top + 'px',
-        left: resizedRect.left + 'px',
+        height: miniMapContainer.height+'px',
+        width: miniMapContainer.width+'px',
+        top: miniMapContainer.top + 'px',
+        left: miniMapContainer.left + 'px',
       }"
       >
       </div>
 
-    <div
-        style="position:absolute;background-color: rgba(255,255,255,0.75);border: 1px solid #d74848; pointer-events: none;"
-        :style="{
-      height: resizedScene.height + 'px',
-      width: resizedScene.width + 'px',
-      top: resizedScene.top + 'px',
-      left: resizedScene.left + 'px',
+      <div
+          style="position:absolute;background-color: rgba(255,255,255,0.75);border: 1px solid #d74848; pointer-events: none;"
+          :style="{
+      height: minimapScene.height + 'px',
+      width: minimapScene.width + 'px',
+      top: minimapScene.top + 'px',
+      left: minimapScene.left + 'px',
     }"
-    ></div>
+      ></div>
     </div>
   </div>
 </template>
