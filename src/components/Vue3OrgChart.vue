@@ -1,25 +1,3 @@
-<template>
-  <div class="vue3-org-chart">
-    <div ref="container" class="vue3-org-chart-container">
-      <div ref="scene" class="vue3-org-chart-scene">
-        <Node v-if="data.length && api.rootId()" :id="api.rootId()" key="root">
-          <template #node="{item, children, open, toggleChildren}">
-            <slot name="node" :item="item" :children="children" :open="open" :toggleChildren="toggleChildren"/>
-          </template>
-        </Node>
-        <div v-else>
-            <span v-if="loading">
-              <slot name="loading">Loading...</slot>
-            </span>
-          <span v-else>
-              <slot name="no-data">No data</slot>
-            </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type {IApi, IProps} from "@/utils/types";
 import {provide, watch} from 'vue';
@@ -44,6 +22,7 @@ provide('content', {data, loading});
 
 // Api setup, useful functions to interact with the org chart
 import {useApi} from "@/composables/useApi";
+import MiniMap from "@/components/MiniMap.vue";
 
 const api: IApi = useApi(instance, data, container, scene);
 provide('api', api);
@@ -57,3 +36,26 @@ watch(() => loading.value, (loadingState) => {
 });
 
 </script>
+
+<template>
+  <div class="vue3-org-chart">
+    <div ref="container" class="vue3-org-chart-container">
+      <div ref="scene" class="vue3-org-chart-scene">
+        <Node v-if="data.length && api.rootId()" :id="api.rootId()" key="root">
+          <template #node="params">
+            <slot name="node" v-bind="params"/>
+          </template>
+        </Node>
+        <div v-else>
+            <span v-if="loading">
+              <slot name="loading">Loading...</slot>
+            </span>
+          <span v-else>
+              <slot name="no-data">No data</slot>
+            </span>
+        </div>
+      </div>
+    </div>
+    <MiniMap></MiniMap>
+  </div>
+</template>

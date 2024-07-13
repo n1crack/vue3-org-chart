@@ -1,3 +1,49 @@
+<script setup lang="ts">
+import type {IApi, INode, INodeScopeParams} from '@/utils/types';
+import {ref, inject, onMounted, computed, nextTick} from 'vue';
+
+// props
+const props = defineProps({
+  id: {type: String, required: true},
+});
+
+// element reference
+const element = ref(null);
+
+// api instance
+const api = inject('api') as IApi;
+
+// get item and children
+const item: INode = api.find(props.id);
+
+// open/close children
+const open = computed(() => item.__open || false);
+
+const children = api.findChildren(props.id);
+
+onMounted(() => {
+  if (!item.parentId) {
+    api.$root.value = element.value;
+    api.zoomReset();
+
+    // item.__open = true; // root is opening children
+    // children.forEach((item) => {
+    //   item.__open = true;
+    // });
+  }
+});
+
+// toggle visibility of children
+const toggleChildren = () => {
+  if (!children.length) {
+    return
+  }
+
+  item.__open = !open.value;
+  api.goToHome(element.value);
+};
+</script>
+
 <template>
   <div class="vue3-org-chart-node">
     <slot name="top-border"/>
@@ -26,50 +72,3 @@
     </Transition>
   </div>
 </template>
-
-<script setup lang="ts">
-import type {IApi, INode, INodeScopeParams} from '@/utils/types';
-import {ref, inject, onMounted, computed} from 'vue';
-
-// props
-const props = defineProps({
-  id: {type: String, required: true},
-});
-
-// element reference
-const element = ref(null);
-
-// api instance
-const api = inject('api') as IApi;
-
-// get item and children
-const item: INode = api.find(props.id);
-
-// open/close children
-const open = computed(() => item.__open || false);
-
-const children = api.findChildren(props.id);
-
-onMounted(() => {
-  if (!item.parentId) {
-    api.$root.value = element.value;
-    api.zoomReset();
-
-    item.__open = true; // root is opening children
-    // children.forEach((item) => {  /
-    //   item.__open = true;
-    // });
-  }
-});
-
-// toggle visibility of children
-const toggleChildren = () => {
-  if (!children.length) {
-    return
-  }
-
-  item.__open = !open.value;
-  api.goToHome(element.value);
-};
-
-</script>

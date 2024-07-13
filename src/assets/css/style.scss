@@ -7,6 +7,8 @@
 }
 
 .vue3-org-chart {
+  position: relative;
+
   .vue3-org-chart-container {
     min-height: var(--vue3-org-chart-container-min-height);
     overflow: hidden;
@@ -14,7 +16,6 @@
 
   .vue3-org-chart-scene {
     display: flex;
-    width: 100%;
     justify-content: center;
   }
 
