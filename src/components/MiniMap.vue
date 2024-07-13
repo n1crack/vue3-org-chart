@@ -1,152 +1,119 @@
 <script setup lang="ts">
-import {computed, inject, onMounted, ref, watch} from "vue";
-import type {IPanzoom} from "@/utils/types";
+import { computed, inject, onMounted, ref } from "vue";
+import type { IPanzoom } from "@/utils/types";
 
-const {instance, scene, container} = inject('panzoom') as IPanzoom;
+// Inject panzoom instance, scene, and container
+const { instance, scene, container } = inject('panzoom') as IPanzoom;
 
 const props = defineProps({
   size: {
     type: Number,
-    default: 1 / 6
-  }
-})
+    default: 1 / 6,
+  },
+});
 
+// Reactive references for container and scene rectangles
+const containerRect = ref({ width: 0, height: 0, top: 0, left: 0 });
+const sceneRect = ref({ width: 0, height: 0, top: 0, left: 0 });
+
+// Computed properties for mini-map dimensions
 const miniMapMaxWidth = computed(() => containerRect.value.width * props.size);
 const miniMapMaxHeight = computed(() => containerRect.value.height * props.size);
 
-const containerRect = ref({
-  width: 0,
-  height: 0,
-  top: 0,
-  left: 0
-});
-
-const sceneRect = ref({
-  width: 0,
-  height: 0,
-  top: 0,
-  left: 0
-});
-
-function debounce(func: (...args: any[]) => void, wait: number): (...args: any[]) => void {
+// Debounce function to limit the rate of function execution
+const debounce = (func: (...args: any[]) => void, wait: number): (...args: any[]) => void => {
   let timeout: ReturnType<typeof setTimeout> | null;
 
   return function (this: any, ...args: any[]): void {
-    const context = this;
-
     clearTimeout(timeout as ReturnType<typeof setTimeout>);
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, wait);
-  };
-}
-
-const updateImmediately = () => {
-  if (!container.value || !scene.value || !(scene.value.firstChild instanceof HTMLElement)) {
-    return;
-  }
-
-  const cRect = container.value.getBoundingClientRect();
-  const sRect = scene.value.firstChild.getBoundingClientRect();
-
-  containerRect.value = {
-    width: cRect.width,
-    height: cRect.height,
-    top: cRect.top,
-    left: cRect.left
-  };
-
-  sceneRect.value = {
-    width: sRect.width,
-    height: sRect.height,
-    top: sRect.top,
-    left: sRect.left
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
 };
 
-const update = debounce(updateImmediately, 500);
+// Update the container and scene rectangle dimensions
+const updateRectangles = () => {
+  if (!container.value || !scene.value || !(scene.value.firstChild instanceof HTMLElement)) return;
 
+  containerRect.value = container.value.getBoundingClientRect();
+  sceneRect.value = scene.value.firstChild.getBoundingClientRect();
+};
+
+const updateRectanglesDebounced = debounce(updateRectangles, 500);
+
+// Set up event listeners and observers on mount
 onMounted(() => {
-  updateImmediately();
+  updateRectangles();
+  instance.value.on('transform', updateRectangles);
 
-  instance.value.on('transform', () => updateImmediately());
-
-  if (container.value) {
-    new ResizeObserver(update).observe(container.value);
-  }
-
-  if (scene.value) {
-    new ResizeObserver(update).observe(scene.value);
-  }
-
+  const resizeObserver = new ResizeObserver(updateRectanglesDebounced);
+  if (container.value) resizeObserver.observe(container.value);
+  if (scene.value) resizeObserver.observe(scene.value);
 });
 
-const maxBoundaries = computed(() => {
-  return {
-    left: containerRect.value.left - sceneRect.value.left + containerRect.value.width,
-    right: sceneRect.value.left - containerRect.value.left + sceneRect.value.width,
-    top: containerRect.value.top - sceneRect.value.top + containerRect.value.height,
-    bottom: sceneRect.value.top - containerRect.value.top + sceneRect.value.height,
-  };
-});
+// Compute the maximum boundaries of the scene
+const maxBoundaries = computed(() => ({
+  left: containerRect.value.left - sceneRect.value.left + containerRect.value.width,
+  right: sceneRect.value.left - containerRect.value.left + sceneRect.value.width,
+  top: containerRect.value.top - sceneRect.value.top + containerRect.value.height,
+  bottom: sceneRect.value.top - containerRect.value.top + sceneRect.value.height,
+}));
 
+// Scale a value based on mini-map dimensions
 const scale = (value: number) => {
-  const maxWidth = Math.max(maxBoundaries.value.left, maxBoundaries.value.right, containerRect.value.width, sceneRect.value.width);
-  const maxHeight = Math.max(maxBoundaries.value.top, maxBoundaries.value.bottom, containerRect.value.height, sceneRect.value.height);
+  const maxWidth = Math.max(
+    maxBoundaries.value.left,
+    maxBoundaries.value.right,
+    containerRect.value.width,
+    sceneRect.value.width
+  );
+  const maxHeight = Math.max(
+    maxBoundaries.value.top,
+    maxBoundaries.value.bottom,
+    containerRect.value.height,
+    sceneRect.value.height
+  );
 
   return value * Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
 };
 
-const miniMapContainer = computed(() => ({
-  width: scale(containerRect.value.width),
-  height: scale(containerRect.value.height),
-  left: Math.max(scale(containerRect.value.left - sceneRect.value.left), 0),
-  top: Math.max(scale(containerRect.value.top - sceneRect.value.top), 0),
-}));
+// Compute the style of the mini-map container and scene
+const computeStyle = (width: number, height: number, left: number, top: number) => {
+  return {width: `${width}px`, height: `${height}px`, left: `${Math.max(left, 0)}px`, top: `${Math.max(top, 0)}px`};
+}
 
-const minimapScene = computed(() => ({
-  width: scale(sceneRect.value.width),
-  height: scale(sceneRect.value.height),
-  left: Math.max(Math.min(
-      scale(sceneRect.value.left - containerRect.value.left),
-      miniMapMaxWidth.value - scale(sceneRect.value.width)
-  ), 0),
-  top: Math.max(Math.min(
-      scale(sceneRect.value.top - containerRect.value.top),
-      miniMapMaxHeight.value - scale(sceneRect.value.height)
-  ), 0)
-}));
+const containerStyle = computed(() => {
+  const width = scale(containerRect.value.width);
+  const height = scale(containerRect.value.height);
+  const left = Math.max(scale(containerRect.value.left - sceneRect.value.left), 0);
+  const top = Math.max(scale(containerRect.value.top - sceneRect.value.top), 0);
+
+  return computeStyle(width, height, left, top);
+});
+
+const sceneStyle = computed(() => {
+  const width = scale(sceneRect.value.width);
+  const height = scale(sceneRect.value.height);
+  const left = Math.min(scale(sceneRect.value.left - containerRect.value.left), miniMapMaxWidth.value - scale(sceneRect.value.width));
+  const top = Math.min(scale(sceneRect.value.top - containerRect.value.top), miniMapMaxHeight.value - scale(sceneRect.value.height));
+
+  return computeStyle(width, height, left, top);
+});
 
 </script>
 
 <template>
   <div
-      :style="{
-        width: miniMapMaxWidth + 'px',
-        height: miniMapMaxHeight + 'px',
-      }"
-      style="position:absolute; padding: 0; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none;">
-
-
+    :style="{ width: miniMapMaxWidth + 'px', height: miniMapMaxHeight + 'px' }"
+    style="position: absolute; padding: 0; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none;"
+  >
     <div
-        style="position:absolute;background-color: rgba(255,255,255,0.30);border: 1px solid #ff8c8c; pointer-events: none;"
-        :style="{
-            height: minimapScene.height + 'px',
-            width: minimapScene.width + 'px',
-            top: minimapScene.top + 'px',
-            left: minimapScene.left + 'px',
-          }"
+      style="position: absolute; background-color: rgba(255,255,255,0.30); border: 1px solid #ff8c8c; pointer-events: none;"
+      :style="sceneStyle"
     ></div>
 
     <div
-        style="position:absolute;background-color: rgba(255,255,255,0.30);border: 1px solid #8ee5f8; pointer-events: none;"
-        :style="{
-            height: miniMapContainer.height+'px',
-            width: miniMapContainer.width+'px',
-            top: miniMapContainer.top + 'px',
-            left: miniMapContainer.left + 'px',
-          }"
-    >
-    </div>
+      style="position: absolute; background-color: rgba(255,255,255,0.30); border: 1px solid #8ee5f8; pointer-events: none;"
+      :style="containerStyle"
+    ></div>
   </div>
 </template>
