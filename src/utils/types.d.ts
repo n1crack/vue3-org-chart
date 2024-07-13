@@ -39,7 +39,7 @@ export interface IApi {
     findChildren: (id: string) => IData,
     goToHome: (element: HTMLElement | null) => void,
     minimap: {
-        state: Ref<boolean>,
+        state: boolean,
         toggle: () => void
     }
 }
