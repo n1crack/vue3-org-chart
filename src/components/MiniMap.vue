@@ -103,7 +103,6 @@ const sceneStyle = computed(() => {
 
 <template>
   <div class="vue3-org-chart-minimap" :style="{ width: miniMapMaxWidth + 'px', height: miniMapMaxHeight + 'px' }">
-    <canvas ref="canvasRef" style="filter: grayscale(100%);"></canvas>
     <div class="vue3-org-chart-minimap-scene" :style="sceneStyle"></div>
     <div class="vue3-org-chart-minimap-container" :style="containerStyle"></div>
   </div>
