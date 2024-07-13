@@ -84,8 +84,8 @@ const computeStyle = (width: number, height: number, left: number, top: number) 
 const containerStyle = computed(() => {
   const width = scale(containerRect.value.width);
   const height = scale(containerRect.value.height);
-  const left = Math.max(scale(containerRect.value.left - sceneRect.value.left), 0);
-  const top = Math.max(scale(containerRect.value.top - sceneRect.value.top), 0);
+  const left = scale(containerRect.value.left - sceneRect.value.left);
+  const top = scale(containerRect.value.top - sceneRect.value.top);
 
   return computeStyle(width, height, left, top);
 });
