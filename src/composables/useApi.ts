@@ -7,7 +7,7 @@ import type { Ref } from 'vue'
 export function useApi(panzoomInstance: Ref<PanZoom>, data: IData, container: Ref<HTMLElement|null>, scene: Ref<HTMLElement|null>) {
     // root node element
     const $root = ref<HTMLElement | null>(null);
-    const homePosition = reactive({x: 0, y: 40})
+    const homePosition = reactive({x: 0, y: 40});
 
     // find node by id
     function find(id: string) {

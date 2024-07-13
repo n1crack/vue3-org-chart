@@ -1,4 +1,5 @@
 import type {Ref} from "vue";
+import type {PanZoom} from "panzoom";
 
 export interface IProps {
     data?: IData,
@@ -16,6 +17,12 @@ export type IData = Array<INode>;
 export interface IDataSetup {
     initialData: IData,
     json?: string
+}
+
+export interface IPanzoom {
+    container: Ref<HTMLElement | null>;
+    instance: Ref<PanZoom>;
+    scene: Ref<HTMLElement | null>
 }
 
 export interface IApi {

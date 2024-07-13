@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {IApi, IProps} from "@/utils/types";
+import type {IApi, IPanzoom, IProps} from "@/utils/types";
 import {provide, watch} from 'vue';
 import Node from './Node.vue';
 
@@ -11,8 +11,8 @@ const props = withDefaults(defineProps<IProps>(), {
 // Panzoom setup, provide it to the child components
 import {usePanzoom} from "@/composables/usePanzoom";
 
-const {instance, scene, container} = usePanzoom();
-provide('panzoom', {instance, scene, container});
+const {instance, scene, container} = usePanzoom() as IPanzoom;
+provide('panzoom', {instance, scene, container} as IPanzoom);
 
 // Data setup, provide data and loading state to the child components
 import {useData} from "@/composables/useData";
@@ -23,6 +23,7 @@ provide('content', {data, loading});
 // Api setup, useful functions to interact with the org chart
 import {useApi} from "@/composables/useApi";
 import MiniMap from "@/components/MiniMap.vue";
+import type {PanZoom} from "panzoom";
 
 const api: IApi = useApi(instance, data, container, scene);
 provide('api', api);
