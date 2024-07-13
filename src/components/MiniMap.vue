@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from "vue";
-import type { IPanzoom } from "@/utils/types";
+import {computed, inject, onMounted, ref} from "vue";
+import type {IPanzoom} from "@/utils/types";
 
 // Inject panzoom instance, scene, and container
-const { instance, scene, container } = inject('panzoom') as IPanzoom;
+const {instance, scene, container} = inject('panzoom') as IPanzoom;
 
 const props = defineProps({
   size: {
@@ -13,8 +13,8 @@ const props = defineProps({
 });
 
 // Reactive references for container and scene rectangles
-const containerRect = ref({ width: 0, height: 0, top: 0, left: 0 });
-const sceneRect = ref({ width: 0, height: 0, top: 0, left: 0 });
+const containerRect = ref({width: 0, height: 0, top: 0, left: 0});
+const sceneRect = ref({width: 0, height: 0, top: 0, left: 0});
 
 // Computed properties for mini-map dimensions
 const miniMapMaxWidth = computed(() => containerRect.value.width * props.size);
@@ -61,16 +61,16 @@ const maxBoundaries = computed(() => ({
 // Scale a value based on mini-map dimensions
 const scale = (value: number) => {
   const maxWidth = Math.max(
-    maxBoundaries.value.left,
-    maxBoundaries.value.right,
-    containerRect.value.width,
-    sceneRect.value.width
+      maxBoundaries.value.left,
+      maxBoundaries.value.right,
+      containerRect.value.width,
+      sceneRect.value.width
   );
   const maxHeight = Math.max(
-    maxBoundaries.value.top,
-    maxBoundaries.value.bottom,
-    containerRect.value.height,
-    sceneRect.value.height
+      maxBoundaries.value.top,
+      maxBoundaries.value.bottom,
+      containerRect.value.height,
+      sceneRect.value.height
   );
 
   return value * Math.min(miniMapMaxWidth.value / maxWidth, miniMapMaxHeight.value / maxHeight);
@@ -102,18 +102,9 @@ const sceneStyle = computed(() => {
 </script>
 
 <template>
-  <div
-    :style="{ width: miniMapMaxWidth + 'px', height: miniMapMaxHeight + 'px' }"
-    style="position: absolute; padding: 0; bottom: 0; right: 0; border: 1px solid #e1e1e1; pointer-events: none;"
-  >
-    <div
-      style="position: absolute; background-color: rgba(255,255,255,0.30); border: 1px solid #ff8c8c; pointer-events: none;"
-      :style="sceneStyle"
-    ></div>
-
-    <div
-      style="position: absolute; background-color: rgba(255,255,255,0.30); border: 1px solid #8ee5f8; pointer-events: none;"
-      :style="containerStyle"
-    ></div>
+  <div class="vue3-org-chart-minimap" :style="{ width: miniMapMaxWidth + 'px', height: miniMapMaxHeight + 'px' }">
+    <canvas ref="canvasRef" style="filter: grayscale(100%);"></canvas>
+    <div class="vue3-org-chart-minimap-scene" :style="sceneStyle"></div>
+    <div class="vue3-org-chart-minimap-container" :style="containerStyle"></div>
   </div>
 </template>

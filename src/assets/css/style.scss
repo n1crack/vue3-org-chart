@@ -78,6 +78,29 @@
     display: flex;
   }
 
+  .vue3-org-chart-minimap {
+    position: absolute;
+    padding: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #e1e1e1;
+    pointer-events: none;
+
+    .vue3-org-chart-minimap-scene {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.30);
+      border: 1px solid #ff8c8c;
+      pointer-events: none;
+    }
+
+    .vue3-org-chart-minimap-container {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.30);
+      border: 1px solid #8ee5f8;
+      pointer-events: none;
+    }
+  }
+
   .nodeTransition-leave-active {
     transition: all 0.2s ease;
   }
