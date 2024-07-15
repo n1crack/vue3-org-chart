@@ -1,69 +1,69 @@
-import { defineComponent as X, ref as b, inject as L, computed as $, onMounted as V, resolveComponent as K, openBlock as m, createElementBlock as y, renderSlot as M, createElementVNode as C, unref as p, createCommentVNode as O, withKeys as W, withModifiers as q, createVNode as F, Transition as J, withCtx as S, Fragment as G, renderList as Q, createBlock as j, normalizeClass as U, mergeProps as ee, reactive as D, normalizeStyle as H, provide as Z, watch as te, normalizeProps as oe, guardReactiveProps as ne, createTextVNode as I } from "vue";
+import { defineComponent as X, ref as C, inject as L, computed as b, onMounted as V, resolveComponent as K, openBlock as p, createElementBlock as y, renderSlot as M, createElementVNode as R, unref as m, createCommentVNode as O, withKeys as W, withModifiers as q, createVNode as F, Transition as J, withCtx as S, Fragment as G, renderList as Q, createBlock as j, normalizeClass as U, mergeProps as ee, reactive as D, normalizeStyle as H, provide as Z, watch as te, normalizeProps as ne, guardReactiveProps as oe, createTextVNode as I } from "vue";
 import ae from "panzoom";
 const ie = { class: "vue3-org-chart-node" }, se = {
   key: 0,
   class: "vue3-org-chart-node-element-top-line"
-}, re = {
+}, le = {
   key: 1,
   class: "vue3-org-chart-node-element-bottom-line"
-}, le = {
+}, re = {
   key: 0,
   class: "vue3-org-chart-node-container"
-}, ue = /* @__PURE__ */ X({
+}, ce = /* @__PURE__ */ X({
   __name: "Node",
   props: {
     id: { type: String, required: !0 }
   },
   setup(i) {
-    const r = i, a = b(null), s = L("api"), l = s.find(r.id), o = $(() => l.__open || !1), t = s.findChildren(r.id);
+    const l = i, a = C(null), s = L("api"), r = s.find(l.id), n = b(() => r.__open || !1), t = s.findChildren(l.id);
     V(() => {
-      l.parentId || (s.$root.value = a.value, s.zoomReset(), l.__open = !0);
+      r.parentId || (s.$root.value = a.value, s.zoomReset(), r.__open = !0);
     });
     const h = () => {
-      t.length && (l.__open = !o.value, s.goToHome(a.value));
+      t.length && (r.__open = !n.value, s.goToHome(a.value));
     };
-    return (c, x) => {
+    return (u, x) => {
       const f = K("Node", !0);
-      return m(), y("div", ie, [
-        M(c.$slots, "top-border"),
-        C("div", {
+      return p(), y("div", ie, [
+        M(u.$slots, "top-border"),
+        R("div", {
           class: "vue3-org-chart-node-element",
           ref_key: "element",
           ref: a
         }, [
-          p(l).parentId ? (m(), y("div", se)) : O("", !0),
-          C("div", {
+          m(r).parentId ? (p(), y("div", se)) : O("", !0),
+          R("div", {
             tabindex: "0",
-            onKeydown: x[0] || (x[0] = W(q((w) => p(s).goToHome(a.value), ["self", "prevent"]), ["space"]))
+            onKeydown: x[0] || (x[0] = W(q((w) => m(s).goToHome(a.value), ["self", "prevent"]), ["space"]))
           }, [
-            M(c.$slots, "node", {
-              item: p(l),
-              children: p(t),
-              open: o.value,
+            M(u.$slots, "node", {
+              item: m(r),
+              children: m(t),
+              open: n.value,
               toggleChildren: h
             })
           ], 32),
-          p(t).length && o.value ? (m(), y("div", re)) : O("", !0)
+          m(t).length && n.value ? (p(), y("div", le)) : O("", !0)
         ], 512),
         F(J, { name: "nodeTransition" }, {
           default: S(() => [
-            p(t).length && o.value ? (m(), y("div", le, [
-              (m(!0), y(G, null, Q(p(t), (w, _) => (m(), j(f, {
+            m(t).length && n.value ? (p(), y("div", re, [
+              (p(!0), y(G, null, Q(m(t), (w, _) => (p(), j(f, {
                 key: w.id,
                 id: w.id,
                 ref_for: !0,
                 ref: "nodeRefs"
               }, {
                 "top-border": S(() => [
-                  C("div", {
+                  R("div", {
                     class: U(["vue3-org-chart-node-element-horizontal-line", {
-                      left: o.value && _ !== 0,
-                      right: o.value && _ !== p(t).length - 1
+                      left: n.value && _ !== 0,
+                      right: n.value && _ !== m(t).length - 1
                     }])
                   }, null, 2)
                 ]),
                 node: S((d) => [
-                  M(c.$slots, "node", ee({ ref_for: !0 }, d))
+                  M(u.$slots, "node", ee({ ref_for: !0 }, d))
                 ]),
                 _: 2
               }, 1032, ["id"]))), 128))
@@ -75,14 +75,14 @@ const ie = { class: "vue3-org-chart-node" }, se = {
     };
   }
 });
-function ce() {
-  let i = b();
-  const r = b(null), a = b(null);
+function ue() {
+  let i = C();
+  const l = C(null), a = C(null);
   function s() {
-    r.value && (i.value = ae(r.value, {
+    l.value && (i.value = ae(l.value, {
       zoomDoubleClickSpeed: 1.4,
       maxZoom: 5,
-      minZoom: 0.1,
+      minZoom: 0.02,
       initialZoom: 1,
       bounds: !1
     }));
@@ -92,36 +92,36 @@ function ce() {
   }), {
     instance: i,
     container: a,
-    scene: r
+    scene: l
   };
 }
-function de({ initialData: i, json: r }) {
-  const a = b(!0), s = D(i), l = async (o) => await (await fetch(o)).json();
+function de({ initialData: i, json: l }) {
+  const a = C(!0), s = D(i), r = async (n) => await (await fetch(n)).json();
   return V(async () => {
-    r && Object.assign(s, await l(r)), a.value = !1;
+    l && Object.assign(s, await r(l)), a.value = !1;
   }), {
     data: s,
     loading: a
   };
 }
-function ve(i, r, a, s, l) {
-  const o = b(null), t = D({ x: 0, y: 40 }), h = D({
-    state: l,
+function ve(i, l, a, s, r) {
+  const n = C(null), t = D({ x: 0, y: 40 }), h = D({
+    state: r,
     toggle: () => {
       h.state = !h.state;
     }
   });
-  function c(e) {
-    const n = r.find((u) => u.id === e);
-    if (!n)
+  function u(e) {
+    const o = l.find((c) => c.id === e);
+    if (!o)
       throw new Error(`Node with id ${e} not found`);
-    return n;
+    return o;
   }
   function x(e) {
-    return r.filter((n) => n.parentId === e);
+    return l.filter((o) => o.parentId === e);
   }
   function f() {
-    const e = r.find((n) => n.parentId === "" || !n.parentId);
+    const e = l.find((o) => o.parentId === "" || !o.parentId);
     if (!e)
       throw new Error("Root node not found");
     return e;
@@ -131,44 +131,44 @@ function ve(i, r, a, s, l) {
     return (e = f()) == null ? void 0 : e.id;
   }
   function _() {
-    const e = i.value.getTransform(), n = 0, u = 32;
+    const e = i.value.getTransform(), o = 0, c = 32;
     if (e.scale !== 1) {
-      const R = 1 - e.scale, k = e.x / R, z = e.y / R;
+      const $ = 1 - e.scale, k = e.x / $, z = e.y / $;
       i.value.smoothZoomAbs(k, z, 1);
     } else
-      i.value.smoothMoveTo(n, u);
+      i.value.smoothMoveTo(o, c);
   }
   function d() {
     var T, N;
-    const e = i.value.getTransform(), n = (T = a.value) == null ? void 0 : T.getBoundingClientRect(), u = (N = s.value) == null ? void 0 : N.getBoundingClientRect();
-    if (!n || !u)
+    const e = i.value.getTransform(), o = (T = a.value) == null ? void 0 : T.getBoundingClientRect(), c = (N = s.value) == null ? void 0 : N.getBoundingClientRect();
+    if (!o || !c)
       return { ...t, scale: 1 };
-    const R = u.x - n.x, k = u.y - n.y, z = R + u.width / 2, A = k + u.height / 2;
+    const $ = c.x - o.x, k = c.y - o.y, z = $ + c.width / 2, A = k + c.height / 2;
     return { x: z, y: A, scale: e.scale };
   }
   function B(e) {
     var Y;
-    const n = (Y = a.value) == null ? void 0 : Y.getBoundingClientRect();
-    if (!n || !e)
+    const o = (Y = a.value) == null ? void 0 : Y.getBoundingClientRect();
+    if (!o || !e)
       return;
-    const u = e.getBoundingClientRect(), R = n.x + n.width / 2 + t.x, k = n.y + t.y, z = u.x + u.width / 2, A = u.y, T = R - z, N = k - A;
+    const c = e.getBoundingClientRect(), $ = o.x + o.width / 2 + t.x, k = o.y + t.y, z = c.x + c.width / 2, A = c.y, T = $ - z, N = k - A;
     i.value.moveBy(T, N, !0);
   }
   function E() {
-    const { x: e, y: n, scale: u } = d();
-    i.value.smoothZoomAbs(e, n, u * 3 / 2);
+    const { x: e, y: o, scale: c } = d();
+    i.value.smoothZoomAbs(e, o, c * 3 / 2);
   }
   function P() {
-    const { x: e, y: n, scale: u } = d();
-    i.value.smoothZoomAbs(e, n, u * 2 / 3);
+    const { x: e, y: o, scale: c } = d();
+    i.value.smoothZoomAbs(e, o, c * 2 / 3);
   }
   function v() {
-    r.forEach((e) => {
+    l.forEach((e) => {
       e.__open = !1;
     });
   }
   function g() {
-    r.forEach((e) => {
+    l.forEach((e) => {
       e.__open = !0;
     });
   }
@@ -178,10 +178,10 @@ function ve(i, r, a, s, l) {
     zoomOut: P,
     expandAll: g,
     collapseAll: v,
-    $root: o,
+    $root: n,
     root: f,
     rootId: w,
-    find: c,
+    find: u,
     findChildren: x,
     goToHome: B,
     minimap: h
@@ -196,56 +196,59 @@ const he = /* @__PURE__ */ X({
     }
   },
   setup(i) {
-    const { instance: r, scene: a, container: s } = L("panzoom"), l = i, o = b({ width: 0, height: 0, top: 0, left: 0 }), t = b({ width: 0, height: 0, top: 0, left: 0 }), h = $(() => o.value.width * l.size), c = $(() => o.value.height * l.size), x = (v, g) => {
+    const { instance: l, scene: a, container: s } = L("panzoom"), r = i, n = C({ width: 0, height: 0, top: 0, left: 0 }), t = C({ width: 0, height: 0, top: 0, left: 0 }), h = b(() => n.value.width * r.size), u = b(() => n.value.height * r.size), x = (v, g) => {
       let e;
-      return function(...n) {
-        clearTimeout(e), e = setTimeout(() => v.apply(this, n), g);
+      return function(...o) {
+        clearTimeout(e), e = setTimeout(() => v.apply(this, o), g);
       };
     }, f = () => {
-      !s.value || !a.value || !(a.value.firstChild instanceof HTMLElement) || (o.value = s.value.getBoundingClientRect(), t.value = a.value.firstChild.getBoundingClientRect());
-    }, w = x(f, 500);
+      !s.value || !a.value || !(a.value.firstChild instanceof HTMLElement) || (n.value = s.value.getBoundingClientRect(), t.value = a.value.firstChild.getBoundingClientRect());
+    }, w = x(f, 350);
     V(() => {
-      f(), r.value.on("transform", f);
+      f(), l.value.on("transform", f);
       const v = new ResizeObserver(w);
       s.value && v.observe(s.value), a.value && v.observe(a.value);
     });
-    const _ = $(() => ({
-      left: o.value.left - t.value.left + o.value.width,
-      right: t.value.left - o.value.left + t.value.width,
-      top: o.value.top - t.value.top + o.value.height,
-      bottom: t.value.top - o.value.top + t.value.height
+    const _ = b(() => ({
+      left: n.value.left - t.value.left + n.value.width,
+      right: t.value.left - n.value.left + t.value.width,
+      top: n.value.top - t.value.top + n.value.height,
+      bottom: t.value.top - n.value.top + t.value.height
     })), d = (v) => {
       const g = Math.max(
         _.value.left,
         _.value.right,
-        o.value.width,
+        n.value.width,
         t.value.width
       ), e = Math.max(
         _.value.top,
         _.value.bottom,
-        o.value.height,
+        n.value.height,
         t.value.height
       );
-      return v * Math.min(h.value / g, c.value / e);
-    }, B = (v, g, e, n) => ({ width: `${v}px`, height: `${g}px`, left: `${Math.max(e, 0)}px`, top: `${Math.max(n, 0)}px` }), E = $(() => {
-      const v = d(o.value.width), g = d(o.value.height), e = Math.max(d(o.value.left - t.value.left), 0), n = Math.max(d(o.value.top - t.value.top), 0);
-      return B(v, g, e, n);
-    }), P = $(() => {
-      const v = d(t.value.width), g = d(t.value.height), e = Math.min(d(t.value.left - o.value.left), h.value - d(t.value.width)), n = Math.min(d(t.value.top - o.value.top), c.value - d(t.value.height));
-      return B(v, g, e, n);
+      return v * Math.min(h.value / g, u.value / e);
+    }, B = (v, g, e, o) => ({ width: `${v}px`, height: `${g}px`, left: `${Math.max(e, 0)}px`, top: `${Math.max(o, 0)}px` }), E = b(() => {
+      const v = d(n.value.width), g = d(n.value.height), e = d(n.value.left - t.value.left), o = d(n.value.top - t.value.top);
+      return B(v, g, e, o);
+    }), P = b(() => {
+      const v = d(t.value.width), g = d(t.value.height), e = Math.min(d(t.value.left - n.value.left), h.value - d(t.value.width)), o = Math.min(d(t.value.top - n.value.top), u.value - d(t.value.height));
+      return B(v, g, e, o);
     });
-    return (v, g) => (m(), y("div", {
-      style: H([{ width: h.value + "px", height: c.value + "px" }, { position: "absolute", padding: "0", bottom: "0", right: "0", border: "1px solid #e1e1e1", "pointer-events": "none" }])
+    return (v, g) => (p(), y("div", {
+      class: "vue3-org-chart-minimap",
+      style: H({ width: h.value + "px", height: u.value + "px" })
     }, [
-      C("div", {
-        style: H([{ position: "absolute", "background-color": "rgba(255,255,255,0.30)", border: "1px solid #ff8c8c", "pointer-events": "none" }, P.value])
+      R("div", {
+        class: "vue3-org-chart-minimap-scene",
+        style: H(P.value)
       }, null, 4),
-      C("div", {
-        style: H([{ position: "absolute", "background-color": "rgba(255,255,255,0.30)", border: "1px solid #8ee5f8", "pointer-events": "none" }, E.value])
+      R("div", {
+        class: "vue3-org-chart-minimap-container",
+        style: H(E.value)
       }, null, 4)
     ], 4));
   }
-}), fe = { class: "vue3-org-chart" }, pe = { key: 1 }, me = { key: 0 }, ge = { key: 1 }, _e = /* @__PURE__ */ X({
+}), fe = { class: "vue3-org-chart" }, me = { key: 1 }, pe = { key: 0 }, ge = { key: 1 }, _e = /* @__PURE__ */ X({
   __name: "Vue3OrgChart",
   props: {
     data: { default: () => [] },
@@ -253,41 +256,41 @@ const he = /* @__PURE__ */ X({
     minimap: { type: Boolean, default: !1 }
   },
   emits: ["onReady"],
-  setup(i, { emit: r }) {
-    const a = i, { instance: s, scene: l, container: o } = ce();
-    Z("panzoom", { instance: s, scene: l, container: o });
+  setup(i, { emit: l }) {
+    const a = i, { instance: s, scene: r, container: n } = ue();
+    Z("panzoom", { instance: s, scene: r, container: n });
     const { data: t, loading: h } = de({ initialData: a.data, json: a.json });
     Z("content", { data: t, loading: h });
-    const c = ve(s, t, o, l, a.minimap);
-    Z("api", c);
-    const x = r;
+    const u = ve(s, t, n, r, a.minimap);
+    Z("api", u);
+    const x = l;
     return te(() => h.value, (f) => {
-      f || x("onReady", { api: c });
-    }), (f, w) => (m(), y("div", fe, [
-      C("div", {
+      f || x("onReady", { api: u });
+    }), (f, w) => (p(), y("div", fe, [
+      R("div", {
         ref_key: "container",
-        ref: o,
+        ref: n,
         class: "vue3-org-chart-container"
       }, [
-        C("div", {
+        R("div", {
           ref_key: "scene",
-          ref: l,
+          ref: r,
           class: "vue3-org-chart-scene"
         }, [
-          p(t).length && p(c).rootId() ? (m(), j(ue, {
-            id: p(c).rootId(),
+          m(t).length && m(u).rootId() ? (p(), j(ce, {
+            id: m(u).rootId(),
             key: "root"
           }, {
             node: S((_) => [
-              M(f.$slots, "node", oe(ne(_)))
+              M(f.$slots, "node", ne(oe(_)))
             ]),
             _: 3
-          }, 8, ["id"])) : (m(), y("div", pe, [
-            p(h) ? (m(), y("span", me, [
+          }, 8, ["id"])) : (p(), y("div", me, [
+            m(h) ? (p(), y("span", pe, [
               M(f.$slots, "loading", {}, () => [
                 I("Loading...")
               ])
-            ])) : (m(), y("span", ge, [
+            ])) : (p(), y("span", ge, [
               M(f.$slots, "no-data", {}, () => [
                 I("No data")
               ])
@@ -295,7 +298,7 @@ const he = /* @__PURE__ */ X({
           ]))
         ], 512)
       ], 512),
-      !p(h) && p(c).minimap.state ? (m(), j(he, { key: 0 })) : O("", !0)
+      !m(h) && m(u).minimap.state ? (p(), j(he, { key: 0 })) : O("", !0)
     ]));
   }
 }), we = {
@@ -303,7 +306,7 @@ const he = /* @__PURE__ */ X({
    * @param {import('vue').App} app
    * @param options
    */
-  install(i, r = {}) {
+  install(i, l = {}) {
     i.component("Vue3OrgChart", _e);
   }
 };
