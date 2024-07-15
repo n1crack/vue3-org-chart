@@ -17,7 +17,7 @@ export function usePanzoom(): IPanzoom {
         instance.value = panzoom(scene.value, {
             zoomDoubleClickSpeed: 1.4,
             maxZoom: 5,
-            minZoom: 0.1,
+            minZoom: 0.02,
             initialZoom: 1,
             bounds: false,
         });
