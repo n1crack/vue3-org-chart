@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {IApi, INode, INodeScopeParams} from '@/utils/types';
-import {ref, inject, onMounted, computed} from 'vue';
+import {ref, inject, onMounted, computed, nextTick} from 'vue';
 
 // props
 const props = defineProps({
@@ -24,7 +24,9 @@ const children = api.findChildren(props.id);
 onMounted(() => {
   if (!item.parentId) {
     api.$root.value = element.value;
-    api.zoomReset();
+    nextTick(() => {
+      api.zoomReset();
+    });
 
     item.__open = true; // root is opening children
     // children.forEach((item) => {
